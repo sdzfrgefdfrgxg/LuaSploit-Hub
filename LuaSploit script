@@ -1,0 +1,846 @@
+local Rayfield = loadstring(game:HttpGet('https://sirius.menu/rayfield'))()
+local Window = Rayfield:CreateWindow({
+   Name = "LuaSploit Hub",
+   Icon = 0, -- Icon in Topbar. Can use Lucide Icons (string) or Roblox Image (number). 0 to use no icon (default).
+   LoadingTitle = "LuaSploit Hub",
+   LoadingSubtitle = "by LuaSploit",
+   Theme = "Default", -- Check https://docs.sirius.menu/rayfield/configuration/themes
+
+   DisableRayfieldPrompts = false,
+   DisableBuildWarnings = false, -- Prevents Rayfield from warning when the script has a version mismatch with the interface
+
+   ConfigurationSaving = {
+      Enabled = true,
+      FolderName = nil, -- Create a custom folder for your hub/game
+      FileName = "LuaSploit"
+   },
+
+   Discord = {
+      Enabled = true, -- Prompt the user to join your Discord server if their executor supports it
+      Invite = "https://discord.gg/ZqWA52DCH2", -- The Discord invite code, do not include discord.gg/. E.g. discord.gg/ ABCD would be ABCD
+      RememberJoins = true -- Set this to false to make them join the discord every time they load it up
+   },
+
+   KeySystem = false, -- Set this to true to use our key system
+   KeySettings = {
+      Title = "Key",
+      Subtitle = "Key System",
+      Note = "Join the Discord for key", -- Use this to tell the user how to get a key
+      FileName = "X3Key", -- It is recommended to use something unique as other scripts using Rayfield may overwrite your key file
+      SaveKey = true, -- The user's key will be saved, but if you change the key, they will be unable to use your script
+      GrabKeyFromSite = false, -- If this is true, set Key below to the RAW site you would like Rayfield to get the key from
+      Key = {"X3B03202"} -- List of keys that will be accepted by the system, can be RAW file links (pastebin, github etc) or simple strings ("hello","key22")
+   }
+})
+
+Rayfield:Notify({
+   Title = "X3's Hub",
+   Content = "Thanks for using my Hub!",
+   Duration = 6.5,
+   Image = 438476326532,
+})
+
+local Tab = Window:CreateTab("Home", 4483362458) -- Title, Image
+
+local Paragraph = Tab:CreateParagraph({Title = "First script hub that I have made, feedback is wanted.", Content = "I know I'm really cool."})
+
+local Button = Tab:CreateButton({
+   Name = "Dark Dex",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Rejoin Server",
+   Callback = function()
+   loadstring(game:HttpGet("https://pastebin.com/raw/5kcf62qz"))()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Server Hop",
+   Callback = function()
+   loadstring(game:HttpGet("https://pastebin.com/raw/cWbZhmD3"))()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Universe Viewer",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/EnesXVC/UniverseViewer/main/script"))()
+   end,
+})
+
+local Tab = Window:CreateTab("Hubs", 4483362458) -- Title, Image
+
+local Section = Tab:CreateSection("Best Hubs, my opinion")
+
+local Button = Tab:CreateButton({
+   Name = "wish'i Universal Project - IP Logger",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/wisl884/wisl-i-Universal-Project1/main/Wisl'i%20Universal%20Project.lua", true))()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Solara Hub",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/samuraa1/Solara-Hub/main/Solara%20Hub.lua"))()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Skibidi Hub",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/aemos2/Skibidihub/refs/heads/main/SkibidiHUB.txt"))()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "XVC Hub",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/XVCHub/RayfieldLoader/main/Loader.lua"))()
+   end,
+})
+
+
+local Tab = Window:CreateTab("Universal", 4483362458) -- Title, Image
+
+local Section = Tab:CreateSection("Universal")
+
+local Button = Tab:CreateButton({
+   Name = "Invisible GUI (Keybind G)",
+   Callback = function()
+   loadstring(game:HttpGet("https://pastebin.com/raw/3Rnd9rHf"))()
+   end,
+})
+
+local Section = Tab:CreateSection("Fly")
+
+local Button = Tab:CreateButton({
+   Name = "Fly",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/XNEOFF/FlyGuiV3/main/FlyGuiV3.txt"))()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "HD Admin Fly",
+   Callback = function()
+   --[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Dxnnyyyh148888/Fly-gui/refs/heads/main/Hhhhh"))()
+   end,
+})
+
+local Section = Tab:CreateSection("No-clip")
+
+local Button = Tab:CreateButton({
+   Name = "Noclip",
+   Callback = function()
+   local Workspace = game:GetService("Workspace")
+local CoreGui = game:GetService("CoreGui")
+local Players = game:GetService("Players")
+local Noclip = Instance.new("ScreenGui")
+local BG = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local Toggle = Instance.new("TextButton")
+local StatusPF = Instance.new("TextLabel")
+local Status = Instance.new("TextLabel")
+local Plr = Players.LocalPlayer
+local Clipon = false
+
+Noclip.Name = "Noclip"
+Noclip.Parent = game.CoreGui
+
+BG.Name = "BG"
+BG.Parent = Noclip
+BG.BackgroundColor3 = Color3.new(0.0980392, 0.0980392, 0.0980392)
+BG.BorderColor3 = Color3.new(0.0588235, 0.0588235, 0.0588235)
+BG.BorderSizePixel = 2
+BG.Position = UDim2.new(0.149479166, 0, 0.82087779, 0)
+BG.Size = UDim2.new(0, 210, 0, 127)
+BG.Active = true
+BG.Draggable = true
+
+Title.Name = "Title"
+Title.Parent = BG
+Title.BackgroundColor3 = Color3.new(0.266667, 0.00392157, 0.627451)
+Title.BorderColor3 = Color3.new(0.180392, 0, 0.431373)
+Title.BorderSizePixel = 2
+Title.Size = UDim2.new(0, 210, 0, 33)
+Title.Font = Enum.Font.Highway
+Title.Text = "Noclip"
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.FontSize = Enum.FontSize.Size32
+Title.TextSize = 30
+Title.TextStrokeColor3 = Color3.new(0.180392, 0, 0.431373)
+Title.TextStrokeTransparency = 0
+
+Toggle.Parent = BG
+Toggle.BackgroundColor3 = Color3.new(0.266667, 0.00392157, 0.627451)
+Toggle.BorderColor3 = Color3.new(0.180392, 0, 0.431373)
+Toggle.BorderSizePixel = 2
+Toggle.Position = UDim2.new(0.152380958, 0, 0.374192119, 0)
+Toggle.Size = UDim2.new(0, 146, 0, 36)
+Toggle.Font = Enum.Font.Highway
+Toggle.FontSize = Enum.FontSize.Size28
+Toggle.Text = "Toggle"
+Toggle.TextColor3 = Color3.new(1, 1, 1)
+Toggle.TextSize = 25
+Toggle.TextStrokeColor3 = Color3.new(0.180392, 0, 0.431373)
+Toggle.TextStrokeTransparency = 0
+
+StatusPF.Name = "StatusPF"
+StatusPF.Parent = BG
+StatusPF.BackgroundColor3 = Color3.new(1, 1, 1)
+StatusPF.BackgroundTransparency = 1
+StatusPF.Position = UDim2.new(0.314285725, 0, 0.708661377, 0)
+StatusPF.Size = UDim2.new(0, 56, 0, 20)
+StatusPF.Font = Enum.Font.Highway
+StatusPF.FontSize = Enum.FontSize.Size24
+StatusPF.Text = "Status:"
+StatusPF.TextColor3 = Color3.new(1, 1, 1)
+StatusPF.TextSize = 20
+StatusPF.TextStrokeColor3 = Color3.new(0.333333, 0.333333, 0.333333)
+StatusPF.TextStrokeTransparency = 0
+StatusPF.TextWrapped = true
+
+Status.Name = "Status"
+Status.Parent = BG
+Status.BackgroundColor3 = Color3.new(1, 1, 1)
+Status.BackgroundTransparency = 1
+Status.Position = UDim2.new(0.580952346, 0, 0.708661377, 0)
+Status.Size = UDim2.new(0, 56, 0, 20)
+Status.Font = Enum.Font.Highway
+Status.FontSize = Enum.FontSize.Size14
+Status.Text = "off"
+Status.TextColor3 = Color3.new(0.666667, 0, 0)
+Status.TextScaled = true
+Status.TextSize = 14
+Status.TextStrokeColor3 = Color3.new(0.180392, 0, 0.431373)
+Status.TextWrapped = true
+Status.TextXAlignment = Enum.TextXAlignment.Left
+
+
+Toggle.MouseButton1Click:connect(function()
+	if Status.Text == "off" then
+		Clipon = true
+		Status.Text = "on"
+		Status.TextColor3 = Color3.new(0,185,0)
+		Stepped = game:GetService("RunService").Stepped:Connect(function()
+			if not Clipon == false then
+				for a, b in pairs(Workspace:GetChildren()) do
+                if b.Name == Plr.Name then
+                for i, v in pairs(Workspace[Plr.Name]:GetChildren()) do
+                if v:IsA("BasePart") then
+                v.CanCollide = false
+                end end end end
+			else
+				Stepped:Disconnect()
+			end
+		end)
+	elseif Status.Text == "on" then
+		Clipon = false
+		Status.Text = "off"
+		Status.TextColor3 = Color3.new(170,0,0)
+	end
+end)
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "ESP",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/wa0101/Roblox-ESP/refs/heads/main/esp.lua",true))()
+   end,
+})
+
+local Section = Tab:CreateSection("Aimbots")
+
+local Button = Tab:CreateButton({
+   Name = "Universal Aimbot",
+   Callback = function()
+   local Aimbot = loadstring(game:HttpGet("https://raw.githubusercontent.com/Exunys/Aimbot-V3/main/src/Aimbot.lua"))()
+Aimbot.Load()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Unuversal AimbotV2",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/ttwizz/Open-Aimbot/master/source.lua", true))()
+   end,
+})
+
+local Section = Tab:CreateSection("Admin")
+
+local Button = Tab:CreateButton({
+   Name = "Infinite Yeild",
+   Callback = function()
+   loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+   end,
+})
+
+local Section = Tab:CreateSection("Protection")
+
+local Button = Tab:CreateButton({
+   Name = "Anti ip logger - Blocks Discord Webhooks whilst copying URL",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/EnesXVC/Anti-Logger/main/Easy-Mode"))()
+   end,
+})
+
+local Button = Tab:CreateButton({
+   Name = "Http Spy - Copy URL",
+   Callback = function()
+   loadstring(game:HttpGet("https://raw.githubusercontent.com/EnesXVC/HttpSpy/main/script.lua"))()
+   end,
+})
+
+local Tab = Window:CreateTab("FE/Animations", 4483362458) -- Title, Image
+
+local Section = Tab:CreateSection("R15/R6")
+
+local Button = Tab:CreateButton({
+   Name = "energize",
+   Callback = function()
+   loadstring(game:HttpGet("https://gist.githubusercontent.com/xvchub/28466f3ff5cfa26e815066ba24de5d99/raw/cd4a1f93b4fe331653593ca6e1c0dde1b1ce4d1d/energizegui"))()
+   end,
+})
+
+local Section = Tab:CreateSection("R6")
+
+local Button = Tab:CreateButton({
+   Name = "Jerk Off R6",
+   Callback = function()
+   loadstring(game:HttpGet("https://pastefy.app/wa3v2Vgm/raw"))()
+   end,
+})
+
+local Section = Tab:CreateSection("R15")
+
+local Button = Tab:CreateButton({
+   Name = "Jerk Off R15",
+   Callback = function()
+   loadstring(game:HttpGet("https://pastefy.app/YZoglOyJ/raw"))()
+   end,
+})
+
+if game.PlaceId == 621129760 then
+
+local GamesTab = Window:CreateTab("Supported", 621129760)
+
+GamesTab:CreateButton({
+Name = "KAT Plus",
+Callback = function()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/NaikoScript/Kat-Plus/main/Script"))()
+end
+})
+
+
+GamesTab:CreateButton({
+Name = "Kings Hub",
+Callback = function()
+ --[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+pcall(loadstring(game:HttpGet('https://raw.githubusercontent.com/zReal-King/Knife-Ability-Test/main/Gui')))
+
+end
+})
+
+elseif game.PlaceId == 738339342 then
+
+
+    local GamesTab = Window:CreateTab("Supported", 7733799795)
+
+GamesTab:CreateButton({
+Name = "Fe2 hub - by me",
+Callback = function()
+local TweenService = game:GetService("TweenService")
+
+
+local ScreenGui = Instance.new("ScreenGui")
+local Frame = Instance.new("Frame")
+local Title = Instance.new("TextLabel")
+local AutoWinButton = Instance.new("TextButton")
+local InfJumpButton = Instance.new("TextButton")
+local SpeedLabel = Instance.new("TextLabel")
+local SpeedBox = Instance.new("TextBox")
+local ResetSpeedButton = Instance.new("TextButton")
+local MinimizeButton = Instance.new("TextButton")
+local NoClipButton = Instance.new("TextButton")
+
+ScreenGui.Parent = game.Players.LocalPlayer:WaitForChild("PlayerGui")
+ScreenGui.Name = "FE2Hub"
+
+Frame.Size = UDim2.new(0, 250, 0, 290) -- Increase height to accommodate all buttons
+Frame.Position = UDim2.new(0, 10, 0, 10)
+Frame.BackgroundColor3 = Color3.fromRGB(30, 30, 30)
+Frame.BorderSizePixel = 0
+Frame.Parent = ScreenGui
+Frame.Active = true
+Frame.Draggable = true -- 🔁 Drag Support
+
+Title.Size = UDim2.new(1, 0, 0, 30)
+Title.BackgroundColor3 = Color3.fromRGB(50, 50, 50)
+Title.Text = "Flood Escape 2 Hub"
+Title.TextColor3 = Color3.new(1, 1, 1)
+Title.Font = Enum.Font.SourceSansBold
+Title.TextSize = 18
+Title.Parent = Frame
+
+MinimizeButton.Size = UDim2.new(0, 30, 0, 30)
+MinimizeButton.Position = UDim2.new(1, -40, 0, 0)  -- Positioned in the top right corner
+MinimizeButton.Text = "_"
+MinimizeButton.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+MinimizeButton.TextColor3 = Color3.new(1, 1, 1)
+MinimizeButton.Font = Enum.Font.SourceSans
+MinimizeButton.TextSize = 18
+MinimizeButton.Parent = Frame
+
+AutoWinButton.Size = UDim2.new(0, 220, 0, 40)
+AutoWinButton.Position = UDim2.new(0, 15, 0, 40)
+AutoWinButton.Text = "Auto Win: OFF"
+AutoWinButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+AutoWinButton.TextColor3 = Color3.new(1, 1, 1)
+AutoWinButton.Font = Enum.Font.SourceSans
+AutoWinButton.TextSize = 16
+AutoWinButton.Parent = Frame
+
+InfJumpButton.Size = UDim2.new(0, 220, 0, 40)
+InfJumpButton.Position = UDim2.new(0, 15, 0, 90)
+InfJumpButton.Text = "Infinite Jump: OFF"
+InfJumpButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+InfJumpButton.TextColor3 = Color3.new(1, 1, 1)
+InfJumpButton.Font = Enum.Font.SourceSans
+InfJumpButton.TextSize = 16
+InfJumpButton.Parent = Frame
+
+SpeedLabel.Size = UDim2.new(0, 220, 0, 20)
+SpeedLabel.Position = UDim2.new(0, 15, 0, 140)
+SpeedLabel.Text = "WalkSpeed:"
+SpeedLabel.TextColor3 = Color3.new(1, 1, 1)
+SpeedLabel.Font = Enum.Font.SourceSans
+SpeedLabel.TextSize = 14
+SpeedLabel.BackgroundTransparency = 1
+SpeedLabel.Parent = Frame
+
+SpeedBox.Size = UDim2.new(0, 220, 0, 30)
+SpeedBox.Position = UDim2.new(0, 15, 0, 165)
+SpeedBox.Text = "20"  -- Default speed value set to 20
+SpeedBox.BackgroundColor3 = Color3.fromRGB(80, 80, 80)
+SpeedBox.TextColor3 = Color3.new(1, 1, 1)
+SpeedBox.Font = Enum.Font.SourceSans
+SpeedBox.TextSize = 16
+SpeedBox.Parent = Frame
+
+ResetSpeedButton.Size = UDim2.new(0, 220, 0, 30)
+ResetSpeedButton.Position = UDim2.new(0, 15, 0, 205)
+ResetSpeedButton.Text = "Reset WalkSpeed to Default"
+ResetSpeedButton.BackgroundColor3 = Color3.fromRGB(120, 120, 120)
+ResetSpeedButton.TextColor3 = Color3.new(1, 1, 1)
+ResetSpeedButton.Font = Enum.Font.SourceSans
+ResetSpeedButton.TextSize = 14
+ResetSpeedButton.Parent = Frame
+
+NoClipButton.Size = UDim2.new(0, 220, 0, 40)
+NoClipButton.Position = UDim2.new(0, 15, 0, 245)  -- Positioned below the Reset Speed button
+NoClipButton.Text = "No-Clip: OFF"
+NoClipButton.BackgroundColor3 = Color3.fromRGB(100, 100, 100)
+NoClipButton.TextColor3 = Color3.new(1, 1, 1)
+NoClipButton.Font = Enum.Font.SourceSans
+NoClipButton.TextSize = 16
+NoClipButton.Parent = Frame
+
+local autoWin = false
+local infJump = false
+local noClipEnabled = false
+local isMinimized = false  -- Track whether the frame is minimized
+
+
+local function tweenUI(object, goal, time)
+    local tween = TweenService:Create(object, TweenInfo.new(time, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), goal)
+    tween:Play()
+end
+
+
+local function addHoverEffect(button)
+    button.MouseEnter:Connect(function()
+        tweenUI(button, {BackgroundColor3 = Color3.fromRGB(150, 150, 150)}, 0.2)
+    end)
+
+    button.MouseLeave:Connect(function()
+        tweenUI(button, {BackgroundColor3 = Color3.fromRGB(100, 100, 100)}, 0.2)
+    end)
+end
+
+
+addHoverEffect(AutoWinButton)
+addHoverEffect(InfJumpButton)
+addHoverEffect(NoClipButton)
+addHoverEffect(ResetSpeedButton)
+addHoverEffect(MinimizeButton)
+
+
+local function toggleButtonState(button, isOn)
+    if isOn then
+        button.BackgroundColor3 = Color3.fromRGB(0, 255, 0)  -- Green when ON
+        button.Text = button.Text:match("(.*):") .. ": ON"
+    else
+        button.BackgroundColor3 = Color3.fromRGB(100, 100, 100)  -- Default gray when OFF
+        button.Text = button.Text:match("(.*):") .. ": OFF"
+    end
+end
+
+
+local function toggleNoClip()
+    local character = game.Players.LocalPlayer.Character
+    if character and character:FindFirstChild("Humanoid") then
+        local humanoid = character:FindFirstChild("Humanoid")
+        local parts = character:GetChildren()
+
+        noClipEnabled = not noClipEnabled  -- Toggle No-Clip state
+        toggleButtonState(NoClipButton, noClipEnabled)  -- Update button state
+
+        if noClipEnabled then
+            -- Enable No-Clip: Set CanCollide to false for all parts
+            for _, part in pairs(parts) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = false
+                end
+            end
+        else
+            -- Disable No-Clip: Set CanCollide back to true for all parts
+            for _, part in pairs(parts) do
+                if part:IsA("BasePart") then
+                    part.CanCollide = true
+                end
+            end
+        end
+    end
+end
+
+NoClipButton.MouseButton1Click:Connect(toggleNoClip)
+
+-- AutoWin functionality (same as before)
+AutoWinButton.MouseButton1Click:Connect(function()
+    autoWin = not autoWin
+    toggleButtonState(AutoWinButton, autoWin)  -- Update button state
+    if autoWin then
+        task.spawn(function()
+            while autoWin do
+                task.wait(0.5)
+                for _, part in pairs(workspace:GetDescendants()) do
+                    if part:IsA("Part") and part.Name == "ExitBlock" then
+                        local char = game.Players.LocalPlayer.Character
+                        if char and char:FindFirstChild("HumanoidRootPart") then
+                            char.HumanoidRootPart.CFrame = part.CFrame + Vector3.new(0, 5, 0)
+                        end
+                    end
+                end
+            end
+        end)
+    end
+end)
+
+
+InfJumpButton.MouseButton1Click:Connect(function()
+    infJump = not infJump
+    toggleButtonState(InfJumpButton, infJump)  -- Update button state
+end)
+
+game:GetService("UserInputService").JumpRequest:Connect(function()
+    if infJump then
+        local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+        if hum then hum:ChangeState("Jumping") end
+    end
+end)
+
+
+SpeedBox.FocusLost:Connect(function(enterPressed)
+    if enterPressed then
+        local speed = tonumber(SpeedBox.Text)
+        if speed then
+            local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+            if hum then hum.WalkSpeed = speed end
+        end
+    end
+end)
+
+
+ResetSpeedButton.MouseButton1Click:Connect(function()
+    local hum = game.Players.LocalPlayer.Character and game.Players.LocalPlayer.Character:FindFirstChildOfClass("Humanoid")
+    if hum then
+        hum.WalkSpeed = 20  -- Set walk speed to default value (20)
+        SpeedBox.Text = "20"  -- Update SpeedBox to reflect default value
+    end
+end)
+
+game.Players.LocalPlayer.CharacterAdded:Connect(function(char)
+    char:WaitForChild("Humanoid")
+    task.wait(0.2)
+    local hum = char:FindFirstChildOfClass("Humanoid")
+    local speed = tonumber(SpeedBox.Text)
+    if hum and speed then
+        hum.WalkSpeed = speed
+    end
+end)
+
+
+MinimizeButton.MouseButton1Click:Connect(function()
+    isMinimized = not isMinimized
+    if isMinimized then
+        -- Hide buttons and shrink the frame
+        tweenUI(AutoWinButton, {Visible = false}, 0.3)
+        tweenUI(InfJumpButton, {Visible = false}, 0.3)
+        tweenUI(SpeedLabel, {Visible = false}, 0.3)
+        tweenUI(SpeedBox, {Visible = false}, 0.3)
+        tweenUI(ResetSpeedButton, {Visible = false}, 0.3)
+        tweenUI(NoClipButton, {Visible = false}, 0.3)
+        tweenUI(Frame, {Size = UDim2.new(0, 250, 0, 30)}, 0.3)
+        MinimizeButton.Text = "+"
+    else
+        
+        tweenUI(AutoWinButton, {Visible = true}, 0.3)
+        tweenUI(InfJumpButton, {Visible = true}, 0.3)
+        tweenUI(SpeedLabel, {Visible = true}, 0.3)
+        tweenUI(SpeedBox, {Visible = true}, 0.3)
+        tweenUI(ResetSpeedButton, {Visible = true}, 0.3)
+        tweenUI(NoClipButton, {Visible = true}, 0.3)
+        tweenUI(Frame, {Size = UDim2.new(0, 250, 0, 290)}, 0.3)
+        MinimizeButton.Text = "_"
+    end
+end)
+
+end
+})
+
+elseif game.PlaceId == 2788229376 then
+
+local GamesTab = Window:CreateTab("Supported", 2788229376)
+
+GamesTab:CreateButton({
+Name = "DaHood Script",
+Callback = function()
+       loadstring(game:HttpGet("https://gist.githubusercontent.com/redninjaawesome/539336c48e73107232933475d8e6120a/raw/f95fcd6db11128acd1a200e8866f806d3a102098/gistfile1.txt"))()
+end
+})
+
+elseif game.PlaceId == 13772394625 or game.PlaceId == 14368557094 or game.PlaceId == 14732610803 or game.PlaceId == 14915220621 or game.PlaceId == 15131065025 or game.PlaceId == 15144787112 or game.PlaceId == 15234596844 or game.PlaceId == 15264892126 or game.PlaceId == 15509350986 or game.PlaceId == 15517169103 or game.PlaceId == 15552588346 or game.PlaceId == 16281300371 or game.PlaceId == 16331595046 or game.PlaceId == 16331596518 or game.PlaceId == 16331598816 or game.PlaceId == 16456370330 or game.PlaceId == 17757592456 or game.PlaceId == 92458008626219 then
+
+local GamesTab = Window:CreateTab("Supported", 13772394625)
+
+GamesTab:CreateButton({
+Name = "Plutonium.lua",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/PawsThePaw/Test/refs/heads/main/CurrentBB-obfuscated.lua"))()
+end
+})
+
+GamesTab:CreateButton({
+Name = "Darkones GUI",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/TheDarkoneMarcillisePex/Other-Scripts/refs/heads/main/BladeBall%20GUI"))()
+end
+})
+
+GamesTab:CreateButton({
+Name = "Bakugan",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/SoyAdriYT/Bakugan/refs/heads/main/Games/Blade%20Ball.lua"))()
+end
+})
+
+GamesTab:CreateButton({
+Name = "FemboysHub",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/LarsScripts/BladeBall/refs/heads/main/FemboysHub"))()
+end
+})
+
+elseif game.PlaceId == 17625359962 or game.PlaceId == 18126510175 or game.PlaceId == 71874690745115 or game.PlaceId == 117398147513099 then
+
+local GamesTab = Window:CreateTab("Supported", 17625359962)
+
+GamesTab:CreateButton({
+Name = "Tbao Hub",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubRivals"))()
+end
+})
+
+elseif game.PlaceId == 142823291 or game.PlaceId == 335132309 or game.PlaceId == 636649648 then
+
+local GamesTab = Window:CreateTab("Supported", 142823291)
+
+GamesTab:CreateButton({
+Name = "Vertex",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/vertex-peak/vertex/refs/heads/main/loadstring"))()
+end
+})
+
+GamesTab:CreateButton({
+Name = "XHub",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/Au0yX/Community/main/XhubMM2"))()
+end
+})
+
+GamesTab:CreateButton({
+Name = "ESP",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/Ihaveash0rtnamefordiscord/Releases/main/MurderMystery2HighlightESP"))()
+end
+})
+
+
+elseif game.PlaceId == 15101393044 or game.PlaceId == 15642262165 or game.PlaceId == 15642275269 or game.PlaceId == 17481176031 or game.PlaceId == 89606894431558 or game.PlaceId == 127076465038391 or game.PlaceId == 93577264377184 or game.PlaceId == 92548699871096 or game.PlaceId == 99797692199062 or game.PlaceId == 100281385700068 then
+
+local GamesTab = Window:CreateTab("Supported", 15101393044)
+
+GamesTab:CreateButton({
+Name = "DTI Fucker - key system",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/hellohellohell012321/DTI-GUI-V2/main/dti_gui_v2.lua"))()
+end
+})
+
+
+elseif game.PlaceId == 85896571713843 or game.PlaceId == 80630096603395 or game.PlaceId == 98046029518959 or game.PlaceId == 127738893422250 then
+
+local GamesTab = Window:CreateTab("Supported", 85896571713843)
+
+GamesTab:CreateButton({
+Name = "Purlovia Hub",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/Purlovia/BGSI/refs/heads/main/v1"))()
+end
+})
+
+
+elseif game.PlaceId == 18687417158 then
+
+local GamesTab = Window:CreateTab("Supported", 18687417158)
+
+GamesTab:CreateButton({
+Name = "Custom Skins hub/Key - BlameAngelaAndAngelica",
+Callback = function()
+       --[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://rawscripts.net/raw/UPD-Forsaken-OnBudgetSkin-UI-38313"))()
+end
+})
+
+
+GamesTab:CreateButton({
+Name = "Elysian Hub",
+Callback = function()
+       --[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Selivus08/Elysian/refs/heads/main/ElysianV.lua",true))()
+end
+})
+
+
+elseif game.PlaceId == 10449761463  or game.PlaceId == 12360882630  or game.PlaceId == 130818724007978  or game.PlaceId == 131048399685555 then
+
+local GamesTab = Window:CreateTab("Supported", 10449761463)
+
+GamesTab:CreateButton({
+Name = "Sung Jin Woo Script",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/hamletirl/sunjingwoo/refs/heads/main/sunjingwoo"))()
+end
+})
+
+
+GamesTab:CreateButton({
+Name = "Infernium",
+Callback = function()
+       loadstring(game:HttpGet("https://infernium.xyz/tsb.lua",true))()
+end
+})
+
+
+GamesTab:CreateButton({
+Name = "Trashcan Man",
+Callback = function()
+       --[[
+	WARNING: Heads up! This script has not been verified by ScriptBlox. Use at your own risk!
+]]
+loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man", true))()
+end
+})
+
+
+GamesTab:CreateButton({
+Name = "Volta - Need character/s: Sonic/Deadly Ninja",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/VOLTA.lua"))()
+end
+})
+
+
+GamesTab:CreateButton({
+Name = "APOPHENIA - Need character/s: Metal Bat/Butal Demon",
+Callback = function()
+       getgenv().Music = false
+--Setting this to false usually fixes most executors
+--also it helps load time a little bit
+getgenv().AttackQuality = 'High'
+--Set to Low,High
+
+ getgenv().ConstantSpeed = false
+--if you want your speed to be constant
+--Set to Low,High
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/main/APOPHENIA.lua"))()
+end
+})
+
+
+GamesTab:CreateButton({
+Name = "ARCAURA - Need Character/s: Garou/Hero Hunter",
+Callback = function()
+       getgenv().OptimizeUltimate = false
+--self explanatory
+getgenv().ReduceUltFlash = true
+--self explanatory
+getgenv().Move1Insta = false
+--set it to false if you dont want the first move to instant kill
+getgenv().LowQualityMode = true
+--set to true if you have a shit pc (like me)
+getgenv().BetaConsole = true
+--its a console menu so you can modify each settings whenever you want
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/ARCAURA.lua"))()
+end
+})
+
+
+GamesTab:CreateButton({
+Name = "Star Glitcher - Every Character",
+Callback = function()
+       loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/SG_DEMO.lua"))()
+end
+})
+
+
+
+else
+
+local GamesTab = Window:CreateTab("Not supported", 7733799795)
+
+GamesTab:CreateButton({
+Name = "buttonno",
+Callback = function()
+       print ("a3")
+end
+})
+
+end
