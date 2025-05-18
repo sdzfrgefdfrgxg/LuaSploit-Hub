@@ -1,0 +1,509 @@
+-- Bubble Gum Simulator INFINITY Complete Auto Farmer
+-- Features: Auto-Click, Auto-Sell, Auto-Buy, Auto-Hatch, Auto-Claim Chests, AutoFarm Coins, Code Redeemer
+
+-- Services
+local Players = game:GetService("Players")
+local ReplicatedStorage = game:GetService("ReplicatedStorage")
+local RunService = game:GetService("RunService")
+
+-- Load Fluent UI
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+-- Remote Event Paths
+local NetworkFolder = ReplicatedStorage:WaitForChild("Shared"):WaitForChild("Framework"):WaitForChild("Network")
+local RemoteEvent = NetworkFolder:WaitForChild("Remote"):WaitForChild("RemoteEvent")
+local PickupRemote = ReplicatedStorage:WaitForChild("Remotes"):WaitForChild("Pickups"):WaitForChild("CollectPickup")
+
+-- Variables
+local LocalPlayer = Players.LocalPlayer
+local Clicking = false
+local Selling = false
+local Buying = false
+local BuyingStorage = false
+local Hatching = false
+local ClaimingChests = false
+local FarmingCoins = false
+local SelectedFlavor = "Pizza"
+local SelectedStorage = "Chewy Gum"
+local SelectedEgg = "Common Egg"
+local SelectedChest = "Giant Chest"
+local HatchConnection = nil
+local ChestConnection = nil
+local CoinConnection = nil
+
+-- Updated Gum Flavors list with new additions
+local GumFlavors = {
+    "Pizza",
+    "Rainbow",
+    "Galaxy",
+    "Chocolate",
+    "Strawberry",
+    "Blueberry",
+    "Watermelon",
+    "CottonCandy",
+    "Contrast",  -- New flavor
+    "Gold",      -- New flavor
+    "Lemon"      -- New flavor
+}
+
+-- Updated Storage Types list with new additions
+local StorageTypes = {
+    "Chewy Gum",
+    "Stretchy Gum",
+    "Bouncy Gum",
+    "Super Gum",
+    "Mega Gum",
+    "Unreal Gum",  -- New storage
+    "Cosmic Gum",  -- New storage
+    "XL Gum"       -- New storage
+}
+
+
+-- Egg types available for hatching
+local EggTypes = {
+    "Common Egg",
+    "Rare Egg",
+    "Epic Egg",
+    "Legendary Egg",
+    "Mythical Egg"
+}
+
+-- Chest types available for claiming
+local ChestTypes = {
+    "Giant Chest",
+    "Mega Chest",
+    "Epic Chest",
+    "Legendary Chest",
+    "Mythical Chest"
+}
+
+-- Known codes
+local KnownCodes = {
+    "Release", 
+    "INFINITY", 
+    "BUBBLES",
+    "Easter",
+    "sylentlyssorry",
+    "update3",
+    "update2",
+    "Lucky"
+}
+
+-- Create Fluent UI Window
+local Window = Fluent:CreateWindow({
+    Title = "Bubble Gum Simulator INFINITY",
+    SubTitle = "By LuaSploit",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 500),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.RightControl
+})
+
+-- Tabs
+local Tabs = {
+    Main = Window:AddTab({ Title = "Auto Farmer - Buggy", Icon = "settings" }),
+    Shop = Window:AddTab({ Title = "Gum Shop - Buggy", Icon = "shopping-cart" }),
+    Eggs = Window:AddTab({ Title = "Egg Hatching", Icon = "egg" }),
+    Chests = Window:AddTab({ Title = "Chests - Buggy", Icon = "package" }),
+    Farming = Window:AddTab({ Title = "Farming", Icon = "coins" }),
+    Codes = Window:AddTab({ Title = "Codes", Icon = "gift" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+-- Auto-Clicker Toggle
+Tabs.Main:AddToggle("AutoClicker", {
+    Title = "Auto-Clicker (Blow Bubbles)",
+    Default = false,
+    Callback = function(Value)
+        Clicking = Value
+        if Clicking then
+            Fluent:Notify({
+                Title = "Auto-Clicker",
+                Content = "Enabled (20 CPS)",
+                Duration = 3
+            })
+            
+            coroutine.wrap(function()
+                local args = {[1] = "BlowBubble"}
+                while Clicking and task.wait(0.05) do
+                    RemoteEvent:FireServer(unpack(args))
+                end
+            end)()
+        else
+            Fluent:Notify({
+                Title = "Auto-Clicker",
+                Content = "Disabled",
+                Duration = 3
+            })
+        end
+    end
+})
+
+-- Auto-Seller Toggle
+Tabs.Main:AddToggle("AutoSeller", {
+    Title = "Auto-Seller (Sell Bubbles)",
+    Default = false,
+    Callback = function(Value)
+        Selling = Value
+        if Selling then
+            Fluent:Notify({
+                Title = "Auto-Seller",
+                Content = "Enabled (1x per second)",
+                Duration = 3
+            })
+            
+            coroutine.wrap(function()
+                local args = {[1] = "SellBubble"}
+                while Selling and task.wait(1) do
+                    RemoteEvent:FireServer(unpack(args))
+                end
+            end)()
+        else
+            Fluent:Notify({
+                Title = "Auto-Seller",
+                Content = "Disabled",
+                Duration = 3
+            })
+        end
+    end
+})
+
+-- Gum Shop Section (Updated with Storage)
+local FlavorDropdown = Tabs.Shop:AddDropdown("FlavorSelection", {
+    Title = "Select Flavor",
+    Values = GumFlavors,  -- Now includes Contrast, Gold, Lemon
+    Default = "Pizza",
+    Multi = false,
+    Callback = function(Value)
+        SelectedFlavor = Value
+    end
+})
+
+
+Tabs.Shop:AddToggle("AutoBuy", {
+    Title = "Auto-Buy Selected Flavor",
+    Default = false,
+    Callback = function(Value)
+        Buying = Value
+        if Buying then
+            Fluent:Notify({
+                Title = "Auto-Buy",
+                Content = "Enabled for "..SelectedFlavor,
+                Duration = 3
+            })
+            
+            coroutine.wrap(function()
+                while Buying and task.wait(1) do
+                    local args = {
+                        [1] = "GumShopPurchase",
+                        [2] = SelectedFlavor
+                    }
+                    RemoteEvent:FireServer(unpack(args))
+                end
+            end)()
+        else
+            Fluent:Notify({
+                Title = "Auto-Buy",
+                Content = "Disabled",
+                Duration = 3
+            })
+        end
+    end
+})
+
+-- NEW: Auto-Buy Storage Section
+local StorageDropdown = Tabs.Shop:AddDropdown("StorageSelection", {
+    Title = "Select Storage",
+    Values = StorageTypes,  -- Now includes Unreal Gum, Cosmic Gum, XL Gum
+    Default = "Chewy Gum",
+    Multi = false,
+    Callback = function(Value)
+        SelectedStorage = Value
+    end
+})
+
+
+Tabs.Shop:AddToggle("AutoBuyStorage", {
+    Title = "Auto-Buy Selected Storage",
+    Default = false,
+    Callback = function(Value)
+        BuyingStorage = Value
+        if BuyingStorage then
+            Fluent:Notify({
+                Title = "Auto-Buy Storage",
+                Content = "Enabled for "..SelectedStorage,
+                Duration = 3
+            })
+            
+            coroutine.wrap(function()
+                while BuyingStorage and task.wait(1) do
+                    local args = {
+                        [1] = "GumShopPurchase",
+                        [2] = SelectedStorage
+                    }
+                    RemoteEvent:FireServer(unpack(args))
+                end
+            end)()
+        else
+            Fluent:Notify({
+                Title = "Auto-Buy Storage",
+                Content = "Disabled",
+                Duration = 3
+            })
+        end
+    end
+})
+-- Egg Hatching Section (FIXED)
+local EggDropdown = Tabs.Eggs:AddDropdown("EggSelection", {
+    Title = "Select Egg Type",
+    Values = EggTypes,
+    Default = "Common Egg",
+    Multi = false,
+    Callback = function(Value)
+        SelectedEgg = Value
+    end
+})
+
+Tabs.Eggs:AddToggle("AutoHatch", {
+    Title = "Auto-Hatch Selected Egg",
+    Description = "Doesnt work at this moment in time",
+    Default = false,
+    Callback = function(Value)
+        if Value then
+            -- Disconnect previous connection if exists
+            if HatchConnection then
+                HatchConnection:Disconnect()
+            end
+            
+            Fluent:Notify({
+                Title = "Auto-Hatch",
+                Content = "Enabled for "..SelectedEgg,
+                Duration = 3
+            })
+            
+            -- Start new hatch loop
+            HatchConnection = RunService.Heartbeat:Connect(function()
+                local args = {
+                    [1] = "HatchEgg",
+                    [2] = SelectedEgg,
+                    [3] = 1 -- Single hatch
+                }
+                RemoteEvent:FireServer(unpack(args))
+                task.wait(1) -- Hatch delay
+            end)
+        else
+            -- Disconnect if exists
+            if HatchConnection then
+                HatchConnection:Disconnect()
+                HatchConnection = nil
+            end
+            
+            Fluent:Notify({
+                Title = "Auto-Hatch",
+                Content = "Disabled",
+                Duration = 3
+            })
+        end
+    end
+})
+
+-- NEW: Chest Claiming Section
+local ChestDropdown = Tabs.Chests:AddDropdown("ChestSelection", {
+    Title = "Select Chest Type",
+    Description = "Buggy - May not work first try",
+    Values = ChestTypes,
+    Default = "Giant Chest",
+    Multi = false,
+    Callback = function(Value)
+        SelectedChest = Value
+    end
+})
+
+Tabs.Chests:AddToggle("AutoClaimChests", {
+    Title = "Auto-Claim Selected Chest",
+    Default = false,
+    Callback = function(Value)
+        ClaimingChests = Value
+        if ClaimingChests then
+            -- Disconnect previous connection if exists
+            if ChestConnection then
+                ChestConnection:Disconnect()
+            end
+            
+            Fluent:Notify({
+                Title = "Auto-Claim Chests",
+                Content = "Enabled for "..SelectedChest,
+                Duration = 3
+            })
+            
+            -- Start new chest claiming loop
+            ChestConnection = RunService.Heartbeat:Connect(function()
+                local args = {
+                    [1] = "ClaimChest",
+                    [2] = SelectedChest
+                }
+                RemoteEvent:FireServer(unpack(args))
+                task.wait(5) -- Claim every 5 seconds to avoid spamming
+            end)
+        else
+            -- Disconnect if exists
+            if ChestConnection then
+                ChestConnection:Disconnect()
+                ChestConnection = nil
+            end
+            
+            Fluent:Notify({
+                Title = "Auto-Claim Chests",
+                Content = "Disabled",
+                Duration = 3
+            })
+        end
+    end
+})
+
+
+
+
+-- Code Redemption Section
+Tabs.Codes:AddButton({
+    Title = "Redeem All Codes",
+    Description = "Attempts to redeem all known codes ",
+    Callback = function()
+        Fluent:Notify({
+            Title = "Code Redemption",
+            Content = "Starting code redemption...",
+            Duration = 3
+        })
+        
+        local successCount = 0
+        for _, code in pairs(KnownCodes) do
+            local args = {
+                [1] = "RedeemCode",
+                [2] = code
+            }
+            
+            local success = pcall(function()
+                RemoteEvent:FireServer(unpack(args))
+            end)
+            
+            if success then
+                successCount = successCount + 1
+                Fluent:Notify({
+                    Title = "Code Redeemed",
+                    Content = "Success: "..code,
+                    Duration = 2
+                })
+            end
+            
+            task.wait(1) -- Delay between code attempts
+        end
+        
+        Fluent:Notify({
+            Title = "Code Redemption Complete",
+            Content = string.format("Redeemed %d/%d codes", successCount, #KnownCodes),
+            Duration = 5
+        })
+    end
+})
+
+local CodesDropdown = Tabs.Codes:AddDropdown("Codes", {
+    Title = "See available codes",
+    Description = "If everything else fails type these codes manually in the codes area of the Game",
+    Values = KnownCodes,
+    Default = "Release",
+    Multi = false,
+    Callback = function(Value)
+        SelectedKnownCodes = Value
+    end
+})
+
+
+
+-- NEW: AutoFarm Coins Section
+Tabs.Farming:AddToggle("AutoFarmCoins", {
+    Title = "AutoFarm Coins",
+    Description = "Doesnt work at this moment in time",
+    Default = false,
+    Callback = function(Value)
+        FarmingCoins = Value
+        if FarmingCoins then
+            -- Disconnect previous connection if exists
+            if CoinConnection then
+                CoinConnection:Disconnect()
+            end
+            
+            Fluent:Notify({
+                Title = "AutoFarm Coins",
+                Content = "Enabled - Collecting coins",
+                Duration = 3
+            })
+            
+            -- Start new coin farming loop
+            CoinConnection = RunService.Heartbeat:Connect(function()
+                local args = {
+                    [1] = "fa978937-9bc8-4131-9141-cbc1a4f5e899" -- Coin pickup ID
+                }
+                PickupRemote:FireServer(unpack(args))
+                task.wait(0.1) -- Collect every 0.1 seconds
+            end)
+        else
+            -- Disconnect if exists
+            if CoinConnection then
+                CoinConnection:Disconnect()
+                CoinConnection = nil
+            end
+            
+            Fluent:Notify({
+                Title = "AutoFarm Coins",
+                Content = "Disabled",
+                Duration = 3
+            })
+        end
+    end
+})
+
+-- Settings Tab (Updated to include coin connection cleanup)
+Tabs.Settings:AddButton({
+    Title = "Destroy UI",
+    Description = "Safely closes the script",
+    Callback = function()
+        Clicking = false
+        Selling = false
+        Buying = false
+        BuyingStorage = false
+        Hatching = false
+        ClaimingChests = false
+        FarmingCoins = false
+        if HatchConnection then
+            HatchConnection:Disconnect()
+        end
+        if ChestConnection then
+            ChestConnection:Disconnect()
+        end
+        if CoinConnection then
+            CoinConnection:Disconnect()
+        end
+        Window:Destroy()
+    end
+})
+
+-- Initialize UI
+Window:SelectTab(1)
+Fluent:Notify({
+    Title = "Script Loaded",
+    Content = "Complete Auto Farmer Ready!",
+    Duration = 5
+})
+
+-- Save settings
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+InterfaceManager:SetFolder("BGSInfinity")
+SaveManager:SetFolder("BGSInfinity/config")
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+SaveManager:LoadAutoloadConfig()
