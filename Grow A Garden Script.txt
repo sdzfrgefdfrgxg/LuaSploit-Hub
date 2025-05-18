@@ -1,0 +1,650 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Grow A Garden " .. Fluent.Version,
+    SubTitle = "by LuaSploit",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "home" }),
+    AutoBuy = Window:AddTab({ Title = "Auto Buy", Icon = "shopping-cart" }),
+    AutoPlant = Window:AddTab({ Title = "Auto Plant", Icon = "sprout" }),
+    AutoCollect = Window:AddTab({ Title = "Auto Collect - Buggy", Icon = "package" }),
+    AutoSell = Window:AddTab({ Title = "Auto Sell", Icon = "dollar-sign" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+-- Seed data
+local seeds = {
+    "Carrot",
+    "Strawberry",
+    "Blueberry",
+    "Orange Tulip",
+    "Tomato",
+    "Corn",
+    "Daffodil",
+    "watermenlon",
+    "Punmpkin",
+    "Apple",
+    "Bamboo",
+    "Coconut",
+    "Cactus",
+    "Dragon Fruit",
+    "Mango",
+    "Grape",
+    "Mushroom",
+    "Pepper",
+    "Cacao",
+    "Beanstalk"
+}
+
+-- Shared variables
+local selectedSeed = "Carrot"
+
+-- Auto-buy variables
+local autoBuyEnabled = false
+local buyDelay = 1
+
+-- Auto-plant variables
+local autoPlantEnabled = false
+local plantDelay = 1
+local basePlantPosition = Vector3.new(-196.98480224609375, 0.1355254054069519, 53.039772033691406)
+local plotSize = 20
+local randomizePlanting = true
+
+-- Fixed Auto-collect variables
+local autoCollectEnabled = false
+local collectDelay = 5
+local collectRange = 50
+local collectCheckRadius = 20
+
+-- Auto-sell variables
+local sellPosition = Vector3.new(59, -2, 0)
+local gardenPosition = basePlantPosition
+local isSelling = false
+
+-- Function to teleport player
+local function teleportTo(position)
+    local player = game:GetService("Players").LocalPlayer
+    if player.Character and player.Character:FindFirstChild("HumanoidRootPart") then
+        player.Character.HumanoidRootPart.CFrame = CFrame.new(position)
+        return true
+    end
+    return false
+end
+
+-- Function to buy a seed
+local function buySeed(seedName)
+    local args = {
+        [1] = seedName
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("BuySeedStock"):FireServer(unpack(args))
+end
+
+-- Function to plant a seed with optional randomization
+local function plantSeed(position, seedName)
+    local plantPos = position
+    if randomizePlanting then
+        local offsetX = math.random(-plotSize/2, plotSize/2)
+        local offsetZ = math.random(-plotSize/2, plotSize/2)
+        plantPos = Vector3.new(
+            position.X + offsetX,
+            position.Y,
+            position.Z + offsetZ
+        )
+    end
+    
+    local args = {
+        [1] = plantPos,
+        [2] = seedName
+    }
+    game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("Plant_RE"):FireServer(unpack(args))
+    return plantPos
+end
+
+-- Fixed function to collect plants only from your plot
+local function collectPlantsFromPlot()
+    local player = game:GetService("Players").LocalPlayer
+    local character = player.Character
+    if not character then
+        character = player.CharacterAdded:Wait()
+    end
+    
+    local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
+    local plotCenter = basePlantPosition
+    
+    -- Find all harvestable plants in workspace
+    for _, plant in ipairs(workspace:GetDescendants()) do
+        if plant:FindFirstChild("Harvestable") and plant.Harvestable.Value == true and plant:FindFirstChild("Main") then
+            local plantPos = plant.Main.Position
+            
+            -- Check if plant is within plot boundaries and player range
+            local distanceToPlotCenter = (plantPos - plotCenter).Magnitude
+            local distanceToPlayer = (plantPos - humanoidRootPart.Position).Magnitude
+            
+            if distanceToPlotCenter <= (plotSize/2) and distanceToPlayer <= collectRange then
+                -- Fire the harvest event
+                local args = {
+                    [1] = plant
+                }
+                local success, err = pcall(function()
+                    game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("HarvestPlant"):FireServer(unpack(args))
+                end)
+                
+                if not success then
+                    Fluent:Notify({
+                        Title = "Harvest Error",
+                        Content = "Failed to harvest: "..tostring(err),
+                        Duration = 3
+                    })
+                end
+                
+                wait(0.1) -- Small delay between harvests
+            end
+        end
+    end
+end
+
+-- Function to sell items (gradual selling)
+local function sellItems()
+    game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("Sell_Item"):FireServer()
+end
+
+-- Function to sell all inventory with teleportation
+local function sellAllInventory()
+    if isSelling then return false end
+    isSelling = true
+    
+    -- Get current position
+    local player = game:GetService("Players").LocalPlayer
+    local currentPosition = player.Character and player.Character:FindFirstChild("HumanoidRootPart").Position or gardenPosition
+    
+    -- Teleport to sell position
+    local teleportSuccess = pcall(function()
+        teleportTo(sellPosition)
+        wait(1) -- Wait to ensure arrival
+    end)
+    
+    if not teleportSuccess then
+        isSelling = false
+        return false
+    end
+    
+    -- Sell everything
+    local sellSuccess = pcall(function()
+        game:GetService("ReplicatedStorage"):WaitForChild("GameEvents"):WaitForChild("Sell_Inventory"):FireServer()
+    end)
+    
+    -- Teleport back to garden
+    pcall(function()
+        teleportTo(gardenPosition)
+        wait(1) -- Wait to ensure arrival
+    end)
+    
+    isSelling = false
+    return sellSuccess
+end
+
+-- Auto-buy coroutine
+local autoBuyCoroutine
+local function startAutoBuy()
+    if autoBuyCoroutine then
+        coroutine.close(autoBuyCoroutine)
+    end
+    
+    autoBuyCoroutine = coroutine.create(function()
+        while autoBuyEnabled and selectedSeed do
+            buySeed(selectedSeed)
+            wait(buyDelay)
+        end
+    end)
+    coroutine.resume(autoBuyCoroutine)
+end
+
+-- Auto-plant coroutine
+local autoPlantCoroutine
+local function startAutoPlant()
+    if autoPlantCoroutine then
+        coroutine.close(autoPlantCoroutine)
+    end
+    
+    autoPlantCoroutine = coroutine.create(function()
+        while autoPlantEnabled and selectedSeed do
+            local plantedPos = plantSeed(basePlantPosition, selectedSeed)
+            if randomizePlanting then
+                Fluent:Notify({
+                    Title = "Planted",
+                    Content = string.format("Planted %s at (%.1f, %.1f, %.1f)", 
+                        selectedSeed, plantedPos.X, plantedPos.Y, plantedPos.Z),
+                    Duration = 2
+                })
+            end
+            wait(plantDelay)
+        end
+    end)
+    coroutine.resume(autoPlantCoroutine)
+end
+
+-- Fixed Auto-collect coroutine
+local autoCollectCoroutine
+local function startAutoCollect()
+    if autoCollectCoroutine then
+        coroutine.close(autoCollectCoroutine)
+    end
+    
+    autoCollectCoroutine = coroutine.create(function()
+        while autoCollectEnabled do
+            local success, err = pcall(collectPlantsFromPlot)
+            if not success then
+                Fluent:Notify({
+                    Title = "Auto Collect Error",
+                    Content = tostring(err),
+                    Duration = 5
+                })
+            end
+            wait(collectDelay)
+        end
+    end)
+    coroutine.resume(autoCollectCoroutine)
+end
+
+-- Main Tab
+do
+    Fluent:Notify({
+        Title = "Notification",
+        Content = "Grow A Garden script loaded",
+        Duration = 5
+    })
+
+    Tabs.Main:AddDropdown("SeedDropdown", {
+        Title = "Select Seed",
+        Values = seeds,
+        Default = selectedSeed,
+        Multi = false,
+        Callback = function(value)
+            selectedSeed = value
+        end
+    })
+
+    Tabs.Main:AddParagraph({
+        Title = "Instructions",
+        Content = "1. Select a seed type\n2. Configure auto features in their respective tabs"
+    })
+end
+
+-- Auto Buy Tab
+do
+    Tabs.AutoBuy:AddToggle("AutoBuyToggle", {
+        Title = "Enable Auto Buy",
+        Default = false,
+        Callback = function(value)
+            autoBuyEnabled = value
+            if value then
+                startAutoBuy()
+                Fluent:Notify({
+                    Title = "Auto Buy",
+                    Content = "Started auto buying " .. selectedSeed .. " seeds",
+                    Duration = 3
+                })
+            else
+                if autoBuyCoroutine then
+                    coroutine.close(autoBuyCoroutine)
+                end
+                Fluent:Notify({
+                    Title = "Auto Buy",
+                    Content = "Stopped auto buying",
+                    Duration = 3
+                })
+            end
+        end
+    })
+
+    Tabs.AutoBuy:AddSlider("BuyDelaySlider", {
+        Title = "Buy Delay (seconds)",
+        Description = "Delay between each seed purchase",
+        Default = buyDelay,
+        Min = 0.1,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(value)
+            buyDelay = value
+            if autoBuyEnabled then
+                startAutoBuy()
+            end
+        end
+    })
+
+    Tabs.AutoBuy:AddButton({
+        Title = "Buy Selected Seed",
+        Description = "Buys one of the selected seed",
+        Callback = function()
+            if selectedSeed then
+                buySeed(selectedSeed)
+                Fluent:Notify({
+                    Title = "Success",
+                    Content = "Bought 1 " .. selectedSeed .. " seed",
+                    Duration = 3
+                })
+            end
+        end
+    })
+
+    Tabs.AutoBuy:AddParagraph({
+        Title = "Auto Buy Info",
+        Content = "Automatically purchases selected seeds at set interval"
+    })
+end
+
+-- Auto Plant Tab
+do
+    Tabs.AutoPlant:AddToggle("AutoPlantToggle", {
+        Title = "Enable Auto Plant",
+        Default = false,
+        Callback = function(value)
+            autoPlantEnabled = value
+            if value then
+                startAutoPlant()
+                Fluent:Notify({
+                    Title = "Auto Plant",
+                    Content = "Started auto planting " .. selectedSeed .. " seeds",
+                    Duration = 3
+                })
+            else
+                if autoPlantCoroutine then
+                    coroutine.close(autoPlantCoroutine)
+                end
+                Fluent:Notify({
+                    Title = "Auto Plant",
+                    Content = "Stopped auto planting",
+                    Duration = 3
+                })
+            end
+        end
+    })
+
+    Tabs.AutoPlant:AddSlider("PlantDelaySlider", {
+        Title = "Plant Delay (seconds)",
+        Description = "Delay between each planting",
+        Default = plantDelay,
+        Min = 0.1,
+        Max = 5,
+        Rounding = 1,
+        Callback = function(value)
+            plantDelay = value
+            if autoPlantEnabled then
+                startAutoPlant()
+            end
+        end
+    })
+
+    Tabs.AutoPlant:AddInput("XPosition", {
+        Title = "Base Position X",
+        Default = tostring(basePlantPosition.X),
+        Numeric = true,
+        Finished = true,
+        Callback = function(value)
+            basePlantPosition = Vector3.new(tonumber(value), basePlantPosition.Y, basePlantPosition.Z)
+        end
+    })
+
+    Tabs.AutoPlant:AddInput("YPosition", {
+        Title = "Base Position Y",
+        Default = tostring(basePlantPosition.Y),
+        Numeric = true,
+        Finished = true,
+        Callback = function(value)
+            basePlantPosition = Vector3.new(basePlantPosition.X, tonumber(value), basePlantPosition.Z)
+        end
+    })
+
+    Tabs.AutoPlant:AddInput("ZPosition", {
+        Title = "Base Position Z",
+        Default = tostring(basePlantPosition.Z),
+        Numeric = true,
+        Finished = true,
+        Callback = function(value)
+            basePlantPosition = Vector3.new(basePlantPosition.X, basePlantPosition.Y, tonumber(value))
+        end
+    })
+
+    Tabs.AutoPlant:AddSlider("PlotSizeSlider", {
+        Title = "Plot Size",
+        Description = "Area for random planting around base position",
+        Default = plotSize,
+        Min = 5,
+        Max = 50,
+        Rounding = 1,
+        Callback = function(value)
+            plotSize = value
+        end
+    })
+
+    Tabs.AutoPlant:AddToggle("RandomizeToggle", {
+        Title = "Randomize Planting Locations",
+        Default = randomizePlanting,
+        Callback = function(value)
+            randomizePlanting = value
+            Fluent:Notify({
+                Title = "Random Planting",
+                Content = value and "Enabled random planting" or "Disabled random planting",
+                Duration = 2
+            })
+        end
+    })
+
+    Tabs.AutoPlant:AddButton({
+        Title = "Plant Selected Seed",
+        Description = "Plants one seed at current position",
+        Callback = function()
+            if selectedSeed then
+                local plantedPos = plantSeed(basePlantPosition, selectedSeed)
+                Fluent:Notify({
+                    Title = "Success",
+                    Content = string.format("Planted %s at (%.1f, %.1f, %.1f)", 
+                        selectedSeed, plantedPos.X, plantedPos.Y, plantedPos.Z),
+                    Duration = 3
+                })
+            end
+        end
+    })
+
+    Tabs.AutoPlant:AddParagraph({
+        Title = "Auto Plant Info",
+        Content = "Plants seeds randomly within your plot area"
+    })
+end
+
+-- Fixed Auto Collect Tab
+do
+    Tabs.AutoCollect:AddToggle("AutoCollectToggle", {
+        Title = "Enable Auto Collect - doesn't work",
+        Default = false,
+        Callback = function(value)
+            autoCollectEnabled = value
+            if value then
+                startAutoCollect()
+                Fluent:Notify({
+                    Title = "Auto Collect",
+                    Content = "Started auto collecting from your plot",
+                    Duration = 3
+                })
+            else
+                if autoCollectCoroutine then
+                    coroutine.close(autoCollectCoroutine)
+                end
+                Fluent:Notify({
+                    Title = "Auto Collect",
+                    Content = "Stopped auto collecting",
+                    Duration = 3
+                })
+            end
+        end
+    })
+
+    Tabs.AutoCollect:AddSlider("CollectDelaySlider", {
+        Title = "Collect Delay (seconds)",
+        Description = "Delay between collection attempts",
+        Default = collectDelay,
+        Min = 1,
+        Max = 30,
+        Rounding = 1,
+        Callback = function(value)
+            collectDelay = value
+            if autoCollectEnabled then
+                startAutoCollect()
+            end
+        end
+    })
+
+    Tabs.AutoCollect:AddSlider("CollectRangeSlider", {
+        Title = "Collection Range",
+        Description = "Maximum distance to collect plants",
+        Default = collectRange,
+        Min = 10,
+        Max = 100,
+        Rounding = 1,
+        Callback = function(value)
+            collectRange = value
+        end
+    })
+
+    Tabs.AutoCollect:AddButton({
+        Title = "Collect Now",
+        Description = "Collects plants from your plot once",
+        Callback = function()
+            local success, err = pcall(collectPlantsFromPlot)
+            if success then
+                Fluent:Notify({
+                    Title = "Success",
+                    Content = "Collected plants from your plot",
+                    Duration = 3
+                })
+            else
+                Fluent:Notify({
+                    Title = "Collection Error",
+                    Content = "Failed to collect: "..tostring(err),
+                    Duration = 5
+                })
+            end
+        end
+    })
+
+    Tabs.AutoCollect:AddParagraph({
+        Title = "Auto Collect Info",
+        Content = "Automatically harvests mature plants only from your plot area"
+    })
+end
+
+-- Auto Sell Tab
+do
+    -- Sell position inputs
+    Tabs.AutoSell:AddInput("SellXPosition", {
+        Title = "Sell Position X",
+        Default = tostring(sellPosition.X),
+        Numeric = true,
+        Finished = true,
+        Callback = function(value)
+            sellPosition = Vector3.new(tonumber(value), sellPosition.Y, sellPosition.Z)
+        end
+    })
+
+    Tabs.AutoSell:AddInput("SellYPosition", {
+        Title = "Sell Position Y",
+        Default = tostring(sellPosition.Y),
+        Numeric = true,
+        Finished = true,
+        Callback = function(value)
+            sellPosition = Vector3.new(sellPosition.X, tonumber(value), sellPosition.Z)
+        end
+    })
+
+    Tabs.AutoSell:AddInput("SellZPosition", {
+        Title = "Sell Position Z",
+        Default = tostring(sellPosition.Z),
+        Numeric = true,
+        Finished = true,
+        Callback = function(value)
+            sellPosition = Vector3.new(sellPosition.X, sellPosition.Y, tonumber(value))
+        end
+    })
+
+    Tabs.AutoSell:AddButton({
+        Title = "Sell Items Now",
+        Description = "Sells all available items once (no teleport)",
+        Callback = function()
+            sellItems()
+            Fluent:Notify({
+                Title = "Success",
+                Content = "Sold all available items",
+                Duration = 3
+            })
+        end
+    })
+
+    Tabs.AutoSell:AddButton({
+        Title = "Sell ALL Inventory",
+        Description = "TPs to sell location, sells all, then returns",
+        Callback = function()
+            if not isSelling then
+                local success = sellAllInventory()
+                if success then
+                    Fluent:Notify({
+                        Title = "Success",
+                        Content = "Sold entire inventory and returned",
+                        Duration = 3
+                    })
+                else
+                    Fluent:Notify({
+                        Title = "Error",
+                        Content = "Failed to complete sale",
+                        Duration = 5
+                    })
+                end
+            else
+                Fluent:Notify({
+                    Title = "Notice",
+                    Content = "Already selling inventory",
+                    Duration = 2
+                })
+            end
+        end
+    })
+
+    Tabs.AutoSell:AddParagraph({
+        Title = "Auto Sell Info",
+        Content = "Sell Items: Sells harvested crops (no TP)\nSell ALL: Teleports to sell location and back"
+    })
+end
+
+-- Settings Tab (Addons)
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("FluentScriptHub")
+SaveManager:SetFolder("FluentScriptHub/grow-a-garden")
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "Fluent",
+    Content = "The script has been loaded.",
+    Duration = 8
+})
+
+-- Initialize positions
+sellPosition = Vector3.new(59, -2, 0)
+gardenPosition = basePlantPosition
+
+SaveManager:LoadAutoloadConfig()
