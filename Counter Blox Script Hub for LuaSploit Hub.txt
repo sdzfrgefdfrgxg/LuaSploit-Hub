@@ -1,0 +1,74 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "CounterBlox Script Hub" .. Fluent.Version,
+    SubTitle = "By LuaSploit",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+-- Both tabs restored
+local Tabs = {
+    Main = Window:AddTab({ Title = "Main", Icon = "" }),
+    Settings = Window:AddTab({ Title = "Settings", Icon = "settings" })
+}
+
+local Options = Fluent.Options
+
+do
+    Fluent:Notify({
+        Title = "Counterblox script hub",
+        Content = "",
+        SubContent = "By LuaSploit",
+        Duration = 5
+    })
+
+    Tabs.Main:AddParagraph({
+        Title = "The LuaSploit Hub using Rayfiel UI is buggy",
+        Content = "with this game so i made this\nas a replacement."
+    })
+
+    Tabs.Main:AddButton({
+        Title = "Alora",
+        Description = "Alora script",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sj0rs1/alora/main/source.lua"))()
+        end
+    })
+
+    Tabs.Main:AddButton({
+        Title = "Solaris",
+        Description = "Solaris script",
+        Callback = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/toasty-dev/pissblox/main/solaris_bootstrapper.lua",true))()
+        end
+    })
+end
+
+-- Full SaveManager and InterfaceManager functionality restored
+SaveManager:SetLibrary(Fluent)
+InterfaceManager:SetLibrary(Fluent)
+SaveManager:IgnoreThemeSettings()
+SaveManager:SetIgnoreIndexes({})
+InterfaceManager:SetFolder("CounterBloxScriptHub")
+SaveManager:SetFolder("CounterBloxScriptHub/config")
+
+-- Build settings sections
+InterfaceManager:BuildInterfaceSection(Tabs.Settings)
+SaveManager:BuildConfigSection(Tabs.Settings)
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "Script Hub Ready",
+    Content = "Alora and Solaris scripts available",
+    Duration = 8
+})
+
+-- Load any saved configurations
+SaveManager:LoadAutoloadConfig()
