@@ -1,0 +1,182 @@
+local Fluent = loadstring(game:HttpGet("https://github.com/dawid-scripts/Fluent/releases/latest/download/main.lua"))()
+local SaveManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/SaveManager.lua"))()
+local InterfaceManager = loadstring(game:HttpGet("https://raw.githubusercontent.com/dawid-scripts/Fluent/master/Addons/InterfaceManager.lua"))()
+
+local Window = Fluent:CreateWindow({
+    Title = "Ultimate Game Tools " .. Fluent.Version,
+    SubTitle = "Premium Features",
+    TabWidth = 160,
+    Size = UDim2.fromOffset(580, 460),
+    Acrylic = true,
+    Theme = "Dark",
+    MinimizeKey = Enum.KeyCode.LeftControl
+})
+
+-- Create both tabs
+local Tabs = {
+    Main = Window:AddTab({ Title = "Multi-Game", Icon = "globe" }),
+    CounterBlox = Window:AddTab({ Title = "Counter Blox", Icon = "crosshair" })
+}
+
+do
+    Fluent:Notify({
+        Title = "Welcome",
+        Content = "Premium tools loaded successfully",
+        Duration = 5
+    })
+
+    -- ===== MAIN TAB CONTENT =====
+    -- Homocheats Keyless Button
+    Tabs.Main:AddButton({
+        Title = "Load Homocheats Keyless",
+        Description = "Multi-game cheat package",
+        Callback = function()
+            Window:Dialog({
+                Title = "Confirmation",
+                Content = "Load Homocheats Keyless?",
+                Buttons = {
+                    {
+                        Title = "Yes",
+                        Callback = function()
+                            Fluent:Notify({
+                                Title = "Loading",
+                                Content = "Starting Homocheats...",
+                                Duration = 3
+                            })
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/dementiaenjoyer/homohack/main/loader.lua"))()
+                        end
+                    },
+                    {
+                        Title = "No",
+                        Callback = function()
+                            Fluent:Notify({
+                                Title = "Cancelled",
+                                Content = "Homocheats not loaded",
+                                Duration = 2
+                            })
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    -- Game Features Paragraph
+    Tabs.Main:AddParagraph({
+        Title = "Supported Games & Features",
+        Content = [[
+1. Phantom Forces
+• Aimbot • Silent Aim • ESP • Spinbot
+
+2. Bad Business
+• Aimbot • Silent Aim • ESP • Spinbot
+
+3. Frontlines
+• Aimbot • Silent Aim • ESP • Spinbot
+
+5. Fishc
+• AutoFarm
+
+All features: Keyless and free
+        ]]
+    })
+
+    -- ===== COUNTER BLOX TAB CONTENT =====
+    Tabs.CounterBlox:AddParagraph({
+        Title = "Counter Blox Premium Cheats",
+        Content = "Select from our verified scripts below"
+    })
+
+    -- Counter Blox - Alora
+    Tabs.CounterBlox:AddButton({
+        Title = "Load Alora",
+        Description = "Advanced Counter Blox cheat",
+        Callback = function()
+            Window:Dialog({
+                Title = "Confirmation",
+                Content = "Load Alora for Counter Blox?",
+                Buttons = {
+                    {
+                        Title = "Yes",
+                        Callback = function()
+                            Fluent:Notify({
+                                Title = "Loading",
+                                Content = "Starting Alora...",
+                                Duration = 3
+                            })
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/sj0rs1/alora/main/source.lua"))()
+                        end
+                    },
+                    {
+                        Title = "No",
+                        Callback = function()
+                            Fluent:Notify({
+                                Title = "Cancelled",
+                                Content = "Alora not loaded",
+                                Duration = 2
+                            })
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    -- Counter Blox - Solaris
+    Tabs.CounterBlox:AddButton({
+        Title = "Load Solaris",
+        Description = "Premium Counter Blox cheat",
+        Callback = function()
+            Window:Dialog({
+                Title = "Confirmation",
+                Content = "Load Solaris for Counter Blox?",
+                Buttons = {
+                    {
+                        Title = "Yes",
+                        Callback = function()
+                            Fluent:Notify({
+                                Title = "Loading",
+                                Content = "Starting Solaris...",
+                                Duration = 3
+                            })
+                            loadstring(game:HttpGet("https://raw.githubusercontent.com/toasty-dev/pissblox/main/solaris_bootstrapper.lua",true))()
+                        end
+                    },
+                    {
+                        Title = "No",
+                        Callback = function()
+                            Fluent:Notify({
+                                Title = "Cancelled",
+                                Content = "Solaris not loaded",
+                                Duration = 2
+                            })
+                        end
+                    }
+                }
+            })
+        end
+    })
+
+    -- Counter Blox Features
+    Tabs.CounterBlox:AddParagraph({
+        Title = "Available Features",
+        Content = [[
+• Advanced Aimbot
+• Silent Aim
+• Wallhacks (ESP)
+• Triggerbot
+• Skin Changers
+• No Recoil/No Spread
+• Bypassed Detection
+• And many more...
+        ]]
+    })
+end
+
+Window:SelectTab(1)
+
+Fluent:Notify({
+    Title = "Ready",
+    Content = "All game tools are ready to use",
+    Duration = 5
+})
