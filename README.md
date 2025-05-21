@@ -2,28 +2,32 @@ Script Hub, Join the Discord server: https://discord.gg/vqeu7JU8we Join for supp
 
 ![image](https://github.com/user-attachments/assets/f9e3fd81-d99e-47ff-a946-5451cba50c59)
 
-======= LuaSploit Hub Supported Games =======    
-   1. Arsenal
-   2. Blade ball
-   3. Bad Business
-   4. Bubble Gum Simulator INFINITY
-   5. Fishc
-   6. Frontlines
-   7. Counter Blox
-   8. Da Hood
-   9. Dress To Impress (DTI)
-  10. Dead Rails
-  11. Flood Escape 2
-  12. Forsaken
-  13. Funky Friday
-  14. Grow A Garden
-  15. Knife Ability Test (KAT)
-  16. Kamehameha Simulator
-  17. Murder Mystery 2
-  18. Natural Disasters
-  19. RIVALS
-  20. Phantom Forces
-  21. Scary Spelling
-  22. Spray Paint!
-  23. Strongest Battlegrounds
+======= LuaSploit Hub Supported Games =======
+1. Arsenal
+2. Bad Business
+3. Blade ball
+4. Breaking Point
+5. Bubble Gum Simulator INFINITY
+6. Build A Boat
+7. Counter Blox
+8. Da Hood
+9. Dead Rails
+10. Dress To Impress (DTI)
+11. Fishc
+12. Flood Escape 2
+13. Forsaken
+14. Funky Friday
+15. Grow A Garden
+16. Kamehameha Simulator
+17. Knife Ability Test (KAT)
+18. Murder Mystery 2
+19. Natural Disasters
+20. Phantom Forces
+21. Piggy
+22. Prison Life
+23. RIVALS
+24. Scary Spelling
+25. Spray Paint!
+26. Strongest Battlegrounds
+27. StudTowerDefense
 =============================================
