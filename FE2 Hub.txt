@@ -1,3 +1,4 @@
+--Istg if someone steals this ass script atleast give me credit
 --By LuaSploit
 local TweenService = game:GetService("TweenService")
 
