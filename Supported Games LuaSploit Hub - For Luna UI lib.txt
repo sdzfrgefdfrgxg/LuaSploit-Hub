@@ -1,0 +1,912 @@
+-- Services
+local Players = game:GetService("Players")
+local TweenService = game:GetService("TweenService")
+local UserInputService = game:GetService("UserInputService")
+local RunService = game:GetService("RunService")
+local TextService = game:GetService("TextService")
+
+-- Player setup
+local player = Players.LocalPlayer
+local gui = player:WaitForChild("PlayerGui")
+
+-- Main ScreenGui
+local ScreenGui = Instance.new("ScreenGui")
+ScreenGui.Name = "ModernScriptHub"
+ScreenGui.ZIndexBehavior = Enum.ZIndexBehavior.Sibling
+ScreenGui.ResetOnSpawn = false
+ScreenGui.Parent = gui
+
+-- Keybind functionality
+local isUIVisible = true
+local toggleKey = Enum.KeyCode.LeftControl
+local isAnimating = false
+
+-- Main Frame
+local MainFrame = Instance.new("Frame")
+MainFrame.Name = "MainFrame"
+MainFrame.Size = UDim2.new(0, 450, 0, 500)
+MainFrame.Position = UDim2.new(0.5, -225, 0.5, -250)
+MainFrame.AnchorPoint = Vector2.new(0.5, 0.5)
+MainFrame.BackgroundColor3 = Color3.fromRGB(30, 30, 40)
+MainFrame.BackgroundTransparency = 0.1
+MainFrame.BorderSizePixel = 0
+MainFrame.ClipsDescendants = true
+MainFrame.Parent = ScreenGui
+
+-- Corner & Shadow
+local UICorner = Instance.new("UICorner")
+UICorner.CornerRadius = UDim.new(0, 12)
+UICorner.Parent = MainFrame
+
+local UIStroke = Instance.new("UIStroke")
+UIStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+UIStroke.Color = Color3.fromRGB(60, 60, 80)
+UIStroke.LineJoinMode = Enum.LineJoinMode.Round
+UIStroke.Thickness = 2
+UIStroke.Transparency = 0.5
+UIStroke.Parent = MainFrame
+
+-- Title Bar
+local TitleBar = Instance.new("Frame")
+TitleBar.Name = "TitleBar"
+TitleBar.Size = UDim2.new(1, 0, 0, 40)
+TitleBar.BackgroundColor3 = Color3.fromRGB(25, 25, 35)
+TitleBar.BorderSizePixel = 0
+TitleBar.Parent = MainFrame
+
+local TitleCorner = Instance.new("UICorner")
+TitleCorner.CornerRadius = UDim.new(0, 12)
+TitleCorner.Parent = TitleBar
+
+local Title = Instance.new("TextLabel")
+Title.Name = "Title"
+Title.Size = UDim2.new(1, -20, 1, 0)
+Title.Position = UDim2.new(0, 10, 0, 0)
+Title.BackgroundTransparency = 1
+Title.Text = "Supported Games"
+Title.TextColor3 = Color3.fromRGB(220, 220, 220)
+Title.TextSize = 18
+Title.Font = Enum.Font.GothamBold
+Title.TextXAlignment = Enum.TextXAlignment.Left
+Title.Parent = TitleBar
+
+local KeybindIndicator = Instance.new("TextLabel")
+KeybindIndicator.Name = "KeybindIndicator"
+KeybindIndicator.Size = UDim2.new(0, 120, 1, 0)
+KeybindIndicator.Position = UDim2.new(1, -130, 0, 0)
+KeybindIndicator.AnchorPoint = Vector2.new(1, 0)
+KeybindIndicator.BackgroundTransparency = 1
+KeybindIndicator.Text = "Toggle: LeftControl"
+KeybindIndicator.TextColor3 = Color3.fromRGB(180, 180, 180)
+KeybindIndicator.TextSize = 12
+KeybindIndicator.Font = Enum.Font.Gotham
+KeybindIndicator.TextXAlignment = Enum.TextXAlignment.Right
+KeybindIndicator.Parent = TitleBar
+
+local CloseButton = Instance.new("TextButton")
+CloseButton.Name = "CloseButton"
+CloseButton.Size = UDim2.new(0, 30, 0, 30)
+CloseButton.Position = UDim2.new(1, -20, 0.5, 0)
+CloseButton.AnchorPoint = Vector2.new(0.5, 0.5)
+CloseButton.BackgroundColor3 = Color3.fromRGB(50, 50, 60)
+CloseButton.BorderSizePixel = 0
+CloseButton.Text = "X"
+CloseButton.TextColor3 = Color3.fromRGB(220, 220, 220)
+CloseButton.TextSize = 14
+CloseButton.Font = Enum.Font.GothamBold
+CloseButton.Parent = TitleBar
+
+local CloseCorner = Instance.new("UICorner")
+CloseCorner.CornerRadius = UDim.new(0, 6)
+CloseCorner.Parent = CloseButton
+
+-- Tab System Container
+local TabContainer = Instance.new("Frame")
+TabContainer.Name = "TabContainer"
+TabContainer.Size = UDim2.new(1, 0, 0, 40)
+TabContainer.Position = UDim2.new(0, 0, 0, 40)
+TabContainer.BackgroundTransparency = 1
+TabContainer.ClipsDescendants = true
+TabContainer.Parent = MainFrame
+
+-- Tab Scrolling Frame
+local TabScroller = Instance.new("ScrollingFrame")
+TabScroller.Name = "TabScroller"
+TabScroller.Size = UDim2.new(1, 0, 1, 0)
+TabScroller.BackgroundTransparency = 1
+TabScroller.ScrollBarThickness = 5
+TabScroller.ScrollBarImageColor3 = Color3.fromRGB(80, 80, 90)
+TabScroller.AutomaticCanvasSize = Enum.AutomaticSize.X
+TabScroller.CanvasSize = UDim2.new(0, 0, 0, 0)
+TabScroller.ScrollingDirection = Enum.ScrollingDirection.X
+TabScroller.VerticalScrollBarPosition = Enum.VerticalScrollBarPosition.Left
+TabScroller.Parent = TabContainer
+
+local TabButtons = Instance.new("Frame")
+TabButtons.Name = "TabButtons"
+TabButtons.Size = UDim2.new(0, 0, 1, 0) -- Width will be set automatically
+TabButtons.BackgroundTransparency = 1
+TabButtons.Parent = TabScroller
+
+local TabListLayout = Instance.new("UIListLayout")
+TabListLayout.FillDirection = Enum.FillDirection.Horizontal
+TabListLayout.Padding = UDim.new(0, 5)
+TabListLayout.Parent = TabButtons
+
+local TabPadding = Instance.new("UIPadding")
+TabPadding.PaddingLeft = UDim.new(0, 10)
+TabPadding.PaddingRight = UDim.new(0, 10)
+TabPadding.Parent = TabButtons
+
+-- Content Frame
+local ContentFrame = Instance.new("Frame")
+ContentFrame.Name = "ContentFrame"
+ContentFrame.Size = UDim2.new(1, -20, 1, -100)
+ContentFrame.Position = UDim2.new(0, 10, 0, 90)
+ContentFrame.BackgroundTransparency = 1
+ContentFrame.Parent = MainFrame
+
+-- Script List
+local ScriptList = Instance.new("ScrollingFrame")
+ScriptList.Name = "ScriptList"
+ScriptList.Size = UDim2.new(1, 0, 1, 0)
+ScriptList.BackgroundTransparency = 1
+ScriptList.ScrollBarThickness = 5
+ScriptList.ScrollBarImageColor3 = Color3.fromRGB(80, 80, 90)
+ScriptList.CanvasSize = UDim2.new(0, 0, 0, 0)
+ScriptList.AutomaticCanvasSize = Enum.AutomaticSize.Y
+ScriptList.Parent = ContentFrame
+
+local ScriptListLayout = Instance.new("UIListLayout")
+ScriptListLayout.Padding = UDim.new(0, 10)
+ScriptListLayout.Parent = ScriptList
+
+-- Sample Scripts
+local sampleScripts = {
+    {
+        Name = "Vapa V2",
+        Description = "",
+        Tab = "Arsenal",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Nickyangtpe/Vapa-v2/refs/heads/main/Vapav2-Arsenal.lua", true))()
+        end
+    },
+    {
+        Name = "Vertex",
+        Description = "",
+        Tab = "Arsenal",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/vertex-peak/vertex/refs/heads/main/loadstring", true))()
+        end
+    },
+    {
+        Name = "Homocheats",
+        Description = "",
+        Tab = "Bad Business",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/dementiaenjoyer/homohack/main/loader.lua"))()
+        end
+    },
+    {
+        Name = "Plutonium.lua",
+        Description = "",
+        Tab = "Blade Ball",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/PawsThePaw/Test/refs/heads/main/CurrentBB-obfuscated.lua"))()
+        end
+    },
+    {
+        Name = "Darkones GUI",
+        Description = "",
+        Tab = "Blade Ball",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/TheDarkoneMarcillisePex/Other-Scripts/refs/heads/main/BladeBall%20GUI"))()
+        end
+    },
+    {
+        Name = "Bakugan",
+        Description = "",
+        Tab = "Blade Ball",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/SoyAdriYT/Bakugan/refs/heads/main/Games/Blade%20Ball.lua"))()
+        end
+    },
+    {
+        Name = "FemboysHub",
+        Description = "",
+        Tab = "Blade Ball",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/LarsScripts/BladeBall/refs/heads/main/FemboysHub"))()
+        end
+    },
+    {
+        Name = "Purlovia Hub",
+        Description = "",
+        Tab = "Bubble Gum Simulator INFINITY",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Purlovia/BGSI/refs/heads/main/v1"))()
+        end
+    },
+    {
+        Name = "Bubble Gum INFINITY Automation",
+        Description = "By LuaSploit - I know its shit",
+        Tab = "Bubble Gum Simulator INFINITY",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sdzfrgefdfrgxg/LuaSploit-Hub/refs/heads/main/Bubble%20Gum%20Simulator%20INFINITY%20Script.txt"))()
+        end
+    },
+    {
+        Name = "Asu",
+        Description = "",
+        Tab = "Build A Boat",
+        Execute = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/TheRealAsu/BABFT/refs/heads/main/Jan25_Source.lua'))()
+        end
+    },
+    {
+        Name = "Build A Boat GUI",
+        Description = "",
+        Tab = "Build A Boat",
+        Execute = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/TheRealAsu/BABFT/refs/heads/main/Source.lua'))()
+        end
+    },
+    {
+        Name = "Auto Farm - NO GUI/Rejoin to stop",
+        Description = "",
+        Tab = "Build A Boat",
+        Execute = function()
+            loadstring(game:HttpGet("https://pastebin.com/raw/6PVYC3G2"))();
+        end
+    },
+    {
+        Name = "Alora",
+        Description = "",
+        Tab = "Counter Blox",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sj0rs1/alora/main/source.lua"))()
+        end
+    },
+    {
+        Name = "Solaris",
+        Description = "",
+        Tab = "Counter Blox",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/toasty-dev/pissblox/main/solaris_bootstrapper.lua",true))()
+        end
+    },
+    {
+        Name = "Da Hood Script",
+        Description = "",
+        Tab = "Da Hood",
+        Execute = function()
+            loadstring(game:HttpGet("https://gist.githubusercontent.com/redninjaawesome/539336c48e73107232933475d8e6120a/raw/f95fcd6db11128acd1a200e8866f806d3a102098/gistfile1.txt"))()
+        end
+    },
+    {
+        Name = "Tbao Hub",
+        Description = "",
+        Tab = "Dead Rails",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/refs/heads/main/TbaoHubDeadRails"))()
+        end
+    },
+    {
+        Name = "Speed Hub",
+        Description = "",
+        Tab = "Dead Rails",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/AhmadV99/Speed-Hub-X/main/Speed%20Hub%20X.lua", true))()
+        end
+    },
+    {
+        Name = "Tora IsMe",
+        Description = "",
+        Tab = "Dead Rails",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/DeadRails"))()
+        end
+    },
+    {
+        Name = "Tora IsMe",
+        Description = "",
+        Tab = "Dress To Impress (DTI)",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/hellohellohell012321/DTI-GUI-V2/main/dti_gui_v2.lua"))()
+        end
+    },
+    {
+        Name = "Homocheats",
+        Description = "",
+        Tab = "Fishc",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/dementiaenjoyer/homohack/main/loader.lua"))()
+        end
+    },
+    {
+        Name = "FE2 Hub",
+        Description = "By LuaSploit",
+        Tab = "Flood Escape 2",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sdzfrgefdfrgxg/LuaSploit-Hub/refs/heads/main/FE2%20Hub.txt"))()
+        end
+    },
+    {
+        Name = "Custom Skins hub",
+        Description = "Key - BlameAngelaAndAngelica",
+        Tab = "Forsaken",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sdzfrgefdfrgxg/LuaSploit-Hub/refs/heads/main/FE2%20Hub.txt"))()
+        end
+    },
+    {
+        Name = "Elysian Hub",
+        Description = "Key in my discord server because it changes lots.",
+        Tab = "Forsaken",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Selivus08/Elysian/refs/heads/main/ElysianV.lua",true))()
+        end
+    },
+    {
+        Name = "Nadir",
+        Description = "",
+        Tab = "Funky Friday",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Nadir3709/RandomScript/main/FunkyFridayMobile"))()
+        end
+    },
+    {
+        Name = "Grow A Garden Hub",
+        Description = "By LuaSploit - Not Working right now",
+        Tab = "Grow A Garden",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sdzfrgefdfrgxg/LuaSploit-Hub/refs/heads/main/Grow%20A%20Garden%20Script.txt"))()
+        end
+    },
+    {
+        Name = "Kenniels Script",
+        Description = "",
+        Tab = "Grow A Garden",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Kenniel123/Grow-a-garden/refs/heads/main/Grow%20A%20Garden"))()
+        end
+    },
+    {
+        Name = "Ameicaa1 GUI Hub",
+        Description = "",
+        Tab = "Grow A Garden",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/ameicaa1/Grow-a-Garden/main/Grow_A_Garden.lua"))()
+        end
+    },
+    {
+        Name = "Grow A Garden Script V1.01",
+        Description = "",
+        Tab = "Grow A Garden",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/RecryDv/sh0velprod/refs/heads/main/Loader.bf"))()
+        end
+    },
+    {
+        Name = "Kamehameha Simulator Script",
+        Description = "By LuaSploit",
+        Tab = "Kamehameha Simulator",
+        Execute = function()
+            loadstring(game:HttpGet("http://raw.githubusercontent.com/sdzfrgefdfrgxg/LuaSploit-Hub/refs/heads/main/kamehameha%20simulator.txt"))()
+        end
+    },
+    {
+        Name = "Kings Hub",
+        Description = "Key in my discord",
+        Tab = "Knife Ability Test (KAT)",
+        Execute = function()
+            pcall(loadstring(game:HttpGet('https://raw.githubusercontent.com/zReal-King/Knife-Ability-Test/main/Gui')))
+        end
+    },
+    {
+        Name = "Vertex",
+        Description = "",
+        Tab = "Murder Mystery 2",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/vertex-peak/vertex/refs/heads/main/loadstring"))()
+        end
+    },
+    {
+        Name = "XHub",
+        Description = "",
+        Tab = "Murder Mystery 2",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Au0yX/Community/main/XhubMM2"))()
+        end
+    },
+    {
+        Name = "ESP",
+        Description = "",
+        Tab = "Murder Mystery 2",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Ihaveash0rtnamefordiscord/Releases/main/MurderMystery2HighlightESP"))()
+        end
+    },
+    {
+        Name = "RING PARTS/TORNADO]",
+        Description = "Solara & mobile support",
+        Tab = "Natural Disasters",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Null-Fire/main/Loader"))()
+        end
+    },
+    {
+        Name = "NDS Hub",
+        Description = "",
+        Tab = "Natural Disasters",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/KaterHub-Inc/NaturalDisasterSurvival/refs/heads/main/main.lua"))()
+        end
+    },
+    {
+        Name = "Homocheats",
+        Description = "",
+        Tab = "Phantom Forces",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/dementiaenjoyer/homohack/main/loader.lua"))()
+        end
+    },
+    {
+        Name = "Totallynothimplayz's Items Gui",
+        Description = "",
+        Tab = "Piggy",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Uhhhhhhid1/Lmaoiud/refs/heads/main/Tools"))()
+        end
+    },
+    {
+        Name = "Pig Hub",
+        Description = "",
+        Tab = "Piggy",
+        Execute = function()
+            loadstring(game:HttpGet("https://rawscripts.net/raw/Piggy-open-source-15390"))()
+        end
+    },
+    {
+        Name = "Deepstar Hub",
+        Description = "",
+        Tab = "Piggy",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/StarHackScripts/StarHack-Hub-Deepstar-Hub/refs/heads/main/StarHack%20Hub%20-%20Piggy%20Pro%20Hub.txt"))()
+        end
+    },
+    {
+        Name = "Admin",
+        Description = "kinda shit",
+        Tab = "Prison Life",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/StarHackScripts/StarHack-Hub-Deepstar-Hub/refs/heads/main/StarHack%20Hub%20-%20Piggy%20Pro%20Hub.txt"))()
+        end
+    },
+    {
+        Name = "Prizz Admin",
+        Description = "",
+        Tab = "Prison Life",
+        Execute = function()
+            loadstring(game:HttpGet('https://raw.githubusercontent.com/devguy100/PrizzLife/main/pladmin.lua'))()
+        end
+    },
+    {
+        Name = "Tbao Hub",
+        Description = "",
+        Tab = "RIVALS",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/tbao143/thaibao/main/TbaoHubRivals"))()
+        end
+    },
+    {
+        Name = "Auto type",
+        Description = "No GUI, F9/Roblox Console",
+        Tab = "Scary Spelling",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/sdzfrgefdfrgxg/LuaSploit-Hub/refs/heads/main/Scary%20Spelling%20script.txt"))()
+        end
+    },
+    {
+        Name = "Spray Paint!",
+        Description = "Troll GUI",
+        Tab = "Spray Paint!",
+        Execute = function()
+            loadstring(game:HttpGet(('https://pastebin.com/raw/H0rvVeCs'),true))()
+        end
+    },
+    {
+        Name = "Sung Jin Woo Script",
+        Description = "",
+        Tab = "Strongest Battlegrounds",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/hamletirl/sunjingwoo/refs/heads/main/sunjingwoo"))()
+        end
+    },
+    {
+        Name = "Infernium",
+        Description = "",
+        Tab = "Strongest Battlegrounds",
+        Execute = function()
+            loadstring(game:HttpGet("https://infernium.xyz/tsb.lua",true))()
+        end
+    },
+    {
+        Name = "Trashcan Man",
+        Description = "",
+        Tab = "Strongest Battlegrounds",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/yes1nt/yes/refs/heads/main/Trashcan%20Man", true))()
+        end
+    },
+    {
+        Name = "Volta",
+        Description = "Need character/s: Sonic/Deadly Ninja",
+        Tab = "Strongest Battlegrounds",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/VOLTA.lua"))()
+        end
+    },
+    {
+        Name = "APOPHENIA",
+        Description = "Need character/s: Metal Bat/Butal Demon",
+        Tab = "Strongest Battlegrounds",
+        Execute = function()
+            getgenv().Music = false
+--Setting this to false usually fixes most executors
+--also it helps load time a little bit
+getgenv().AttackQuality = 'High'
+--Set to Low,High
+
+ getgenv().ConstantSpeed = false
+--if you want your speed to be constant
+--Set to Low,High
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/main/APOPHENIA.lua"))()
+        end
+    },
+    {
+        Name = "ARCAURA",
+        Description = "Need Character/s: Garou/Hero Hunter",
+        Tab = "Strongest Battlegrounds",
+        Execute = function()
+            getgenv().OptimizeUltimate = false
+--self explanatory
+getgenv().ReduceUltFlash = true
+--self explanatory
+getgenv().Move1Insta = false
+--set it to false if you dont want the first move to instant kill
+getgenv().LowQualityMode = true
+--set to true if you have a shit pc (like me)
+getgenv().BetaConsole = true
+--its a console menu so you can modify each settings whenever you want
+loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/ARCAURA.lua"))()
+        end
+    },
+    {
+        Name = "Star Glitcher",
+        Description = "Every Character",
+        Tab = "Strongest Battlegrounds",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/Reapvitalized/TSB/refs/heads/main/SG_DEMO.lua"))()
+        end
+    },
+    {
+        Name = "Gojo",
+        Description = "Strongest hero/Saitama to Gojo",
+        Tab = "Strongest Battlegrounds",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/skibiditoiletfan2007/BaldyToSorcerer/main/Latest.lua"))()
+        end
+    },
+    {
+        Name = "StudTowerDefense Script",
+        Description = "OP INF MONEY GUI",
+        Tab = "StudTowerDefense",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/decentholograms/StudTowerDefense-Script/refs/heads/main/ScriptStudTD.lua", true))()
+        end
+    },
+    {
+        Name = "Breaking Point Plus",
+        Description = "",
+        Tab = "Breaking Point",
+        Execute = function()
+            loadstring(game:HttpGet("https://raw.githubusercontent.com/NaikoScript/Breaking-Plus/main/Script"))()
+        end
+    }
+}
+
+-- Function to update script list based on selected tab
+local function updateScriptList(tabName)
+    -- Clear current scripts
+    for _, child in ipairs(ScriptList:GetChildren()) do
+        if child:IsA("Frame") then
+            child:Destroy()
+        end
+    end
+    
+    -- Add scripts for the selected tab
+    for _, script in ipairs(sampleScripts) do
+        if script.Tab == tabName then
+            local ScriptFrame = Instance.new("Frame")
+            ScriptFrame.Name = "ScriptFrame"
+            ScriptFrame.Size = UDim2.new(1, 0, 0, 80)
+            ScriptFrame.BackgroundColor3 = Color3.fromRGB(40, 40, 50)
+            ScriptFrame.BackgroundTransparency = 0.5
+            ScriptFrame.BorderSizePixel = 0
+            ScriptFrame.Parent = ScriptList
+            
+            local ScriptCorner = Instance.new("UICorner")
+            ScriptCorner.CornerRadius = UDim.new(0, 8)
+            ScriptCorner.Parent = ScriptFrame
+            
+            local ScriptStroke = Instance.new("UIStroke")
+            ScriptStroke.ApplyStrokeMode = Enum.ApplyStrokeMode.Border
+            ScriptStroke.Color = Color3.fromRGB(80, 80, 100)
+            ScriptStroke.LineJoinMode = Enum.LineJoinMode.Round
+            ScriptStroke.Thickness = 1
+            ScriptStroke.Transparency = 0.5
+            ScriptStroke.Parent = ScriptFrame
+            
+            local ScriptTitle = Instance.new("TextLabel")
+            ScriptTitle.Name = "Title"
+            ScriptTitle.Size = UDim2.new(1, -20, 0, 30)
+            ScriptTitle.Position = UDim2.new(0, 10, 0, 5)
+            ScriptTitle.BackgroundTransparency = 1
+            ScriptTitle.Text = script.Name
+            ScriptTitle.TextColor3 = Color3.fromRGB(220, 220, 220)
+            ScriptTitle.TextSize = 16
+            ScriptTitle.Font = Enum.Font.GothamBold
+            ScriptTitle.TextXAlignment = Enum.TextXAlignment.Left
+            ScriptTitle.Parent = ScriptFrame
+            
+            local ScriptDesc = Instance.new("TextLabel")
+            ScriptDesc.Name = "Description"
+            ScriptDesc.Size = UDim2.new(1, -20, 0, 30)
+            ScriptDesc.Position = UDim2.new(0, 10, 0, 35)
+            ScriptDesc.BackgroundTransparency = 1
+            ScriptDesc.Text = script.Description
+            ScriptDesc.TextColor3 = Color3.fromRGB(180, 180, 180)
+            ScriptDesc.TextSize = 14
+            ScriptDesc.Font = Enum.Font.Gotham
+            ScriptDesc.TextXAlignment = Enum.TextXAlignment.Left
+            ScriptDesc.Parent = ScriptFrame
+            
+            local ExecuteButton = Instance.new("TextButton")
+            ExecuteButton.Name = "ExecuteButton"
+            ExecuteButton.Size = UDim2.new(0, 100, 0, 30)
+            ExecuteButton.Position = UDim2.new(1, -110, 1, -35)
+            ExecuteButton.BackgroundColor3 = Color3.fromRGB(70, 120, 70)
+            ExecuteButton.BorderSizePixel = 0
+            ExecuteButton.Text = "EXECUTE"
+            ExecuteButton.TextColor3 = Color3.fromRGB(220, 220, 220)
+            ExecuteButton.TextSize = 14
+            ExecuteButton.Font = Enum.Font.GothamBold
+            ExecuteButton.Parent = ScriptFrame
+            
+            local ExecuteCorner = Instance.new("UICorner")
+            ExecuteCorner.CornerRadius = UDim.new(0, 6)
+            ExecuteCorner.Parent = ExecuteButton
+            
+            ExecuteButton.MouseEnter:Connect(function()
+                TweenService:Create(ExecuteButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(90, 140, 90)}):Play()
+            end)
+            
+            ExecuteButton.MouseLeave:Connect(function()
+                TweenService:Create(ExecuteButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(70, 120, 70)}):Play()
+            end)
+            
+            ExecuteButton.MouseButton1Click:Connect(function()
+                script.Execute()
+                -- Visual feedback
+                TweenService:Create(ExecuteButton, TweenInfo.new(0.1), {BackgroundColor3 = Color3.fromRGB(120, 170, 120)}):Play()
+                wait(0.1)
+                TweenService:Create(ExecuteButton, TweenInfo.new(0.1), {BackgroundColor3 = Color3.fromRGB(70, 120, 70)}):Play()
+            end)
+        end
+    end
+end
+
+-- Create Tabs
+local tabs = {
+    {Name = "Arsenal", Icon = ""},
+    {Name = "Bad Business", Icon = ""},
+    {Name = "Blade Ball", Icon = ""},
+    {Name = "Breaking Point", Icon = ""},
+    {Name = "Bubble Gum Simulator INFINITY", Icon = ""},
+    {Name = "Build A Boat", Icon = ""},
+    {Name = "Counter Blox", Icon = ""},
+    {Name = "Da Hood", Icon = ""},
+    {Name = "Dead Rails", Icon = ""},
+    {Name = "Dress To Impress (DTI)", Icon = ""},
+    {Name = "Fishc", Icon = ""},
+    {Name = "Flood Escape 2", Icon = ""},
+    {Name = "Forsaken", Icon = ""},
+    {Name = "Funky Friday", Icon = ""},
+    {Name = "Grow A Garden", Icon = ""},
+    {Name = "Kamehameha Simulator", Icon = ""},
+    {Name = "Knife Ability Test (KAT)", Icon = ""},
+    {Name = "Murder Mystery 2", Icon = ""},
+    {Name = "Natural Disasters", Icon = ""},
+    {Name = "Phantom Forces", Icon = ""},
+    {Name = "Piggy", Icon = ""},
+    {Name = "Prison Life", Icon = ""},
+    {Name = "RIVALS", Icon = ""},
+    {Name = "Scary Spelling", Icon = ""},
+    {Name = "Spray Paint!", Icon = ""},
+    {Name = "Strongest Battlegrounds", Icon = ""},
+    {Name = "StudTowerDefense", Icon = ""}
+}
+
+local currentTab = "Arsenal"
+
+-- Calculate required widths for all tabs first
+local tabWidths = {}
+local totalPadding = 20 -- Left + right padding
+local minTabWidth = 80 -- Minimum width for tabs
+local maxTabWidth = 150 -- Maximum width for tabs
+local font = Enum.Font.Gotham
+local textSize = 14
+
+-- Calculate required width for each tab
+for _, tab in ipairs(tabs) do
+    local text = tab.Icon.." "..tab.Name
+    local textBounds = TextService:GetTextSize(text, textSize, font, Vector2.new(1000, 40))
+    local requiredWidth = math.clamp(textBounds.X + 20, minTabWidth, maxTabWidth)
+    table.insert(tabWidths, requiredWidth)
+end
+
+-- Create tab buttons with dynamic widths
+for i, tab in ipairs(tabs) do
+    local TabButton = Instance.new("TextButton")
+    TabButton.Name = tab.Name.."Tab"
+    TabButton.Size = UDim2.new(0, tabWidths[i], 1, 0) -- Dynamic width based on text
+    TabButton.BackgroundColor3 = currentTab == tab.Name and Color3.fromRGB(70, 70, 90) or Color3.fromRGB(50, 50, 60)
+    TabButton.AutoButtonColor = false
+    TabButton.BorderSizePixel = 0
+    TabButton.Text = tab.Icon.." "..tab.Name
+    TabButton.TextColor3 = Color3.fromRGB(220, 220, 220)
+    TabButton.TextSize = textSize
+    TabButton.Font = font
+    TabButton.TextTruncate = Enum.TextTruncate.AtEnd -- Add ellipsis if text is too long
+    TabButton.Parent = TabButtons
+    
+    local TabCorner = Instance.new("UICorner")
+    TabCorner.CornerRadius = UDim.new(0, 6)
+    TabCorner.Parent = TabButton
+    
+    -- Tooltip for truncated text
+    local Tooltip = Instance.new("TextLabel")
+    Tooltip.Name = "Tooltip"
+    Tooltip.Size = UDim2.new(0, 0, 0, 30)
+    Tooltip.Position = UDim2.new(0, 0, -1, 0)
+    Tooltip.BackgroundColor3 = Color3.fromRGB(60, 60, 80)
+    Tooltip.TextColor3 = Color3.fromRGB(220, 220, 220)
+    Tooltip.TextSize = 14
+    Tooltip.Font = font
+    Tooltip.Text = tab.Name
+    Tooltip.Visible = false
+    Tooltip.ZIndex = 10
+    Tooltip.Parent = TabButton
+    
+    local TooltipCorner = Instance.new("UICorner")
+    TooltipCorner.CornerRadius = UDim.new(0, 6)
+    TooltipCorner.Parent = Tooltip
+    
+    TabButton.MouseEnter:Connect(function()
+        if currentTab ~= tab.Name then
+            TweenService:Create(TabButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(60, 60, 80)}):Play()
+        end
+        
+        -- Show tooltip if text is truncated
+        if TabButton.TextFits == false then
+            Tooltip.Visible = true
+            TweenService:Create(Tooltip, TweenInfo.new(0.2), {
+                Size = UDim2.new(0, TextService:GetTextSize(tab.Name, 14, font, Vector2.new(1000, 30)).X + 20, 0, 30)
+            }):Play()
+        end
+    end)
+    
+    TabButton.MouseLeave:Connect(function()
+        if currentTab ~= tab.Name then
+            TweenService:Create(TabButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(50, 50, 60)}):Play()
+        end
+        Tooltip.Visible = false
+        Tooltip.Size = UDim2.new(0, 0, 0, 30)
+    end)
+    
+    TabButton.MouseButton1Click:Connect(function()
+        if currentTab ~= tab.Name then
+            currentTab = tab.Name
+            -- Update all tab buttons
+            for _, btn in ipairs(TabButtons:GetChildren()) do
+                if btn:IsA("TextButton") then
+                    local targetColor = btn.Name == tab.Name.."Tab" and Color3.fromRGB(70, 70, 90) or Color3.fromRGB(50, 50, 60)
+                    TweenService:Create(btn, TweenInfo.new(0.2), {BackgroundColor3 = targetColor}):Play()
+                end
+            end
+                       -- Update the content based on the selected tab
+            updateScriptList(tab.Name)
+        end
+    end)
+end
+
+-- Initialize with main tab
+updateScriptList(currentTab)
+
+-- Keybind toggle functionality
+UserInputService.InputBegan:Connect(function(input, gameProcessed)
+    if not gameProcessed and input.KeyCode == toggleKey and not isAnimating then
+        isUIVisible = not isUIVisible
+        isAnimating = true
+        
+        if isUIVisible then
+            MainFrame.Size = UDim2.new(0, 0, 0, 0)
+            MainFrame.Visible = true
+            local tween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+                Size = UDim2.new(0, 450, 0, 500)
+            })
+            tween:Play()
+            tween.Completed:Wait()
+        else
+            local tween = TweenService:Create(MainFrame, TweenInfo.new(0.3, Enum.EasingStyle.Quad), {
+                Size = UDim2.new(0, 0, 0, 0)
+            })
+            tween:Play()
+            tween.Completed:Wait()
+            MainFrame.Visible = false
+        end
+        
+        isAnimating = false
+    end
+end)
+
+-- Dragging functionality
+local dragging
+local dragInput
+local dragStart
+local startPos
+
+local function update(input)
+    local delta = input.Position - dragStart
+    MainFrame.Position = UDim2.new(startPos.X.Scale, startPos.X.Offset + delta.X, startPos.Y.Scale, startPos.Y.Offset + delta.Y)
+end
+
+TitleBar.InputBegan:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = true
+        dragStart = input.Position
+        startPos = MainFrame.Position
+        
+        input.Changed:Connect(function()
+            if input.UserInputState == Enum.UserInputState.End then
+                dragging = false
+            end
+        end)
+    end
+end)
+
+TitleBar.InputChanged:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseMovement then
+        dragInput = input
+    end
+end)
+
+UserInputService.InputChanged:Connect(function(input)
+    if input == dragInput and dragging then
+        update(input)
+    end
+end)
+
+-- Close button functionality
+CloseButton.MouseButton1Click:Connect(function()
+    ScreenGui:Destroy()
+end)
+
+CloseButton.MouseEnter:Connect(function()
+    TweenService:Create(CloseButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(80, 60, 60)}):Play()
+end)
+
+CloseButton.MouseLeave:Connect(function()
+    TweenService:Create(CloseButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(50, 50, 60)}):Play()
+end)
