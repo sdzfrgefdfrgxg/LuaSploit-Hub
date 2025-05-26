@@ -1,0 +1,86 @@
+getgenv().settings = {
+    auto_type = true;
+    smart_delay = {
+        enabled = true;
+        delay = {0.2, 0.8};
+    }
+};
+
+if (getgenv().execute) then
+    return;
+end;
+
+getgenv().execute = true;
+
+-- variables
+local marketplace_service = game:GetService("MarketplaceService");
+local replicated_storage = game:GetService("ReplicatedStorage");
+local run_service = game:GetService("RunService");
+local players = game:GetService("Players");
+local local_player = players.LocalPlayer;
+
+-- script variables
+local vk_codes = {a = 0x41, b = 0x42, c = 0x43, d = 0x44, e = 0x45, f = 0x46, g = 0x47, h = 0x48, i = 0x49, j = 0x4A, k = 0x4B, l = 0x4C, m = 0x4D, n = 0x4E, o = 0x4F, p = 0x50, q = 0x51, r = 0x52, s = 0x53, t = 0x54, u = 0x55, v = 0x56, w = 0x57, x = 0x58, y = 0x59, z = 0x5A};
+local main_remote = replicated_storage.Events.GameEvent;
+local current_word;
+
+-- functions
+local remove_number = function(word)
+    return word:gsub("%s?%(%d+%)", ""); -- remove the number shit (yes I stole this)
+end;
+
+local random_delay = function(min, max)
+    return min + math.random() * (max - min);
+end;
+
+local get_smart_delay = function()
+    return random_delay(getgenv().settings["smart_delay"]["delay"][1], getgenv().settings["smart_delay"]["delay"][2]) * 0.2;
+end;
+
+local input_word = function(word)
+    task.wait(random_delay(1.4, 2));
+    print("word inputted", word);
+    for i = 1, #word do
+        local char = word:sub(i, i);
+        local key_code = vk_codes[char:lower()];
+        keypress(key_code);
+        keyrelease(key_code);
+        if (getgenv().settings["smart_delay"]["enabled"]) then
+            task.wait(get_smart_delay());
+        end;
+    end;
+    keypress(0x0D);
+    keyrelease(0x0D);
+end;
+
+-- connection (get word)
+game.DescendantAdded:Connect(function(v)
+    if (v:IsA("Sound")) then
+        local id = string.match(v.SoundId, "%d+");
+        if (id and not v.Parent) then
+            -- variables
+            local sound_info = marketplace_service:GetProductInfo(id);
+            local correct_one,_ = pcall(function()
+                v.Parent = workspace;
+            end);
+
+            -- check
+            if (correct_one) then
+                v.Volume = 0;
+                v:Destroy();
+                current_word = remove_number(sound_info.Name);
+                task.wait(v.TimeLength);
+                input_word(current_word);
+            end;
+        end;
+    end;
+end);
+end
+})
+
+Luna:Notification({ 
+	Title = "Scary Spelling Script Successful",
+	Icon = "notifications_active",
+	ImageSource = "Material",
+	Content = "This script has no GUI but shows it working in the roblox console (F9)."
+})
