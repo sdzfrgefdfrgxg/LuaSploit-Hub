@@ -1,0 +1,42 @@
+local powerToggleEnabled = false
+
+local PowerToggle = GamesTab:CreateToggle({
+    Name = "Auto Claim Power Reward",
+    Description = nil,
+    CurrentValue = false,
+    Callback = function(Value)
+        powerToggleEnabled = Value
+        if Value then
+            task.spawn(function()
+                while powerToggleEnabled do
+                    local args = {
+                        [1] = "Power",
+                        [2] = 9e9
+                    }
+                    game:GetService("ReplicatedStorage"):WaitForChild("Remotes"):WaitForChild("ClaimReward"):FireServer(unpack(args))
+                    task.wait(0.01)
+                end
+            end)
+        end
+    end
+}, "PowerToggle")
+local punchToggleEnabled = false
+local PunchToggle = GamesTab:CreateToggle({
+    Name = "Auto Punch - must hold punch to use",
+    Description = nil,
+    CurrentValue = false,
+    Callback = function(Value)
+        punchToggleEnabled = Value
+        if Value then
+            task.spawn(function()
+                while punchToggleEnabled do
+                    local args = {
+                        [1] = 1
+                    }
+                    game:GetService("Players").LocalPlayer.Character.Punch.Event:FireServer(unpack(args))
+                    task.wait(0.01)
+                end
+            end)
+        end
+    end
+}, "PunchToggle")
