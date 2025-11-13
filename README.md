@@ -1,6 +1,7 @@
 Script Hub, Join the Discord server (CLOSED) - For now, it will have things like keys for the keysystem scripts and stuff.
 
-![image](https://github.com/user-attachments/assets/f9e3fd81-d99e-47ff-a946-5451cba50c59)
+<img width="502" height="480" alt="{FC5F0DF7-0DF7-47D4-92E0-CE893CB6D43E}" src="https://github.com/user-attachments/assets/9249d9a3-dd61-4dbd-a606-1c6680cf0006" />
+
 
 ====== LuaSploit Hub Supported Games ======
 1. Arsenal
