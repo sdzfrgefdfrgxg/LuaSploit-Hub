@@ -28,7 +28,7 @@ local dialog = Library:CreateChangelogDialog({
     -- Discord Button Configuration
     Altbutton = {
         Name = "Join Discord",
-        Clipboard = "https://discord.gg/your-invite-link"
+        Clipboard = "https://discord.gg/QwuqqSP9xM"
     },
     
     -- Close Button Notification
