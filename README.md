@@ -1,4 +1,4 @@
-Script Hub, Join the Discord server (CLOSED) - For now, it will have things like keys for the keysystem scripts and stuff.
+Script Hub, Join the Discord server: discord.gg/QwuqqSP9xM to find things like keys for the keysystem scripts and to just talk around.
 
 <img width="502" height="480" alt="{FC5F0DF7-0DF7-47D4-92E0-CE893CB6D43E}" src="https://github.com/user-attachments/assets/9249d9a3-dd61-4dbd-a606-1c6680cf0006" />
 
