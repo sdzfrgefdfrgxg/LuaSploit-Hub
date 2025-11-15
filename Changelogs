@@ -10,9 +10,11 @@ local dialog = Library:CreateChangelogDialog({
     Added Features:
     - Added new game support for 3+ popular games
     - Implemented Changelogs and Supported Games UI
+    - Added stuff - cant remeber :/
     
     Updated Games:
     - Updated support for Natural Disasters!
+    - Added support for Prison Life!
     
     Notes:
     - Some features may be unstable
