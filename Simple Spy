@@ -5,7 +5,7 @@
         exx - basically everything
         Frosty - GUI to Lua
         OSINT BOSS - Fixing the hooks so it works for low level executor (also works for roblox studio environment)
-        LuaSploit - working on simple fixes
+		LuaSploit - working on simple fixes
 ]]
 --// Rhook installation
 local decompile = decompile or warn('ERROR LEVEL 3 : EXPLOIT FUNCTION NOT SUPPORTED (DECOMPILE)')
@@ -686,15 +686,36 @@ end
 --- Drags gui (so long as mouse is held down)
 --- @param input InputObject
 function onBarInput(input)
-	if input.UserInputType == Enum.UserInputType.MouseButton1 then
-		local lastPos = UserInputService.GetMouseLocation(UserInputService)
-		local mainPos = Background.AbsolutePosition
-		local offset = mainPos - lastPos
-		local currentPos = offset + lastPos
-		RunService.BindToRenderStep(RunService, "drag", 1, function()
-			local newPos = UserInputService.GetMouseLocation(UserInputService)
-			if newPos ~= lastPos then
-				local currentX = (offset + newPos).X
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        local dragging = true
+        local dragStart = input.Position
+        local startPos = Background.Position
+        
+        local connection
+        connection = RunService.Heartbeat:Connect(function()
+            if not dragging then
+                connection:Disconnect()
+                return
+            end
+            
+            local delta = UserInputService:GetMouseLocation() - dragStart
+            Background.Position = UDim2.new(
+                startPos.X.Scale, 
+                startPos.X.Offset + delta.X, 
+                startPos.Y.Scale, 
+                startPos.Y.Offset + delta.Y
+            )
+        end)
+        
+        table.insert(
+            connections,
+            UserInputService.InputEnded:Connect(function(inputE)
+                if input == inputE then
+                    dragging = false
+                end
+            end)
+        )
+    end
 				local currentY = (offset + newPos).Y
 				local viewportSize = workspace.CurrentCamera.ViewportSize
 				if
@@ -2023,6 +2044,11 @@ if not _G.SimpleSpyExecuted then
 		end
 		TextLabel:GetPropertyChangedSignal("Text"):Connect(scaleToolTip)
 		-- TopBar.InputBegan:Connect(onBarInput)
+TopBar.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
 		MinimizeButton.MouseButton1Click:Connect(toggleMinimize)
 		MaximizeButton.MouseButton1Click:Connect(toggleSideTray)
 		Simple.MouseButton1Click:Connect(onToggleButtonClick)
@@ -2030,7 +2056,12 @@ if not _G.SimpleSpyExecuted then
 		CloseButton.MouseLeave:Connect(onXButtonUnhover)
 		Simple.MouseEnter:Connect(onToggleButtonHover)
 		Simple.MouseLeave:Connect(onToggleButtonUnhover)
-		CloseButton.MouseButton1Click:Connect(shutdown)
+		CloseButton.MouseButton1Click:Connect(onCloseButtonClicked)
+UserInputService.InputEnded:Connect(function(input)
+    if input.UserInputType == Enum.UserInputType.MouseButton1 then
+        dragging = false
+    end
+end)
 		table.insert(connections, UserInputService.InputBegan:Connect(backgroundUserInput))
 		connectResize()
 		SimpleSpy2.Enabled = true
