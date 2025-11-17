@@ -17,7 +17,7 @@ local dialog = Library:CreateChangelogDialog({
     - Added support for Prison Life!
     
     Notes:
-    - Report any bug or not working scripts via feedback, under Settings tab, or in our Discord
+    - Report any bug or not working scripts via feedback - under Settings tab. Or in our Discord
     - Some features may be unstable
     - More updates coming soon!
     ]],
