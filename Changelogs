@@ -8,17 +8,17 @@ local dialog = Library:CreateChangelogDialog({
     Version: 1.2.4
     
     Added Features:
-    - Added new game support for 3+ popular games
-    - Implemented Changelogs and Supported Games UI
-    - Added stuff - cant remeber :/
+    - Added Logos to the Tabs
+    - Added Script viewer
+    - Made a Discord server
     
     Updated Games:
     - Updated support for Natural Disasters!
     - Added support for Prison Life!
     
     Notes:
+    - Report any bug or not working scripts via feedback or in our Discord
     - Some features may be unstable
-    - Report any bugs in our Discord
     - More updates coming soon!
     ]],
     Search = true,
