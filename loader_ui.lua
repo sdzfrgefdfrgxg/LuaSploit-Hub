@@ -212,8 +212,15 @@ return function()
     -- Parent close button after all other elements are created
     CloseButton.Parent = Container
     
-    -- Function to show the close button with animation
+    -- Function to show the close button with animation after 10 seconds
     local function showCloseButton()
+        -- Wait for 10 seconds total before showing the close button
+        local startTime = os.clock()
+        while os.clock() - startTime < 10 do
+            task.wait()
+        end
+        
+        -- Now show and animate the close button
         CloseButton.Visible = true
         CloseButton.Position = UDim2.new(0.5, 0, 0, 360)  -- Start slightly below
         CloseButton.BackgroundTransparency = 1
