@@ -176,32 +176,56 @@ return function()
     }
     ProgressGradient.Parent = ProgressBar
 
-    -- Close Button
+    -- Close Button (initially hidden)
     local CloseButton = Instance.new("TextButton")
-    CloseButton.Size = UDim2.new(0, 30, 0, 30)
-    CloseButton.Position = UDim2.new(1, -40, 0, 10)
+    CloseButton.Size = UDim2.new(0.4, 0, 0, 36)  -- Wider button
+    CloseButton.Position = UDim2.new(0.3, 0, 0, 340)  -- Positioned below loading bar
+    CloseButton.AnchorPoint = Vector2.new(0.5, 0)  -- Center horizontally
+    CloseButton.Position = UDim2.new(0.5, 0, 0, 340)  -- Centered position
     CloseButton.BackgroundColor3 = Color3.fromRGB(220, 53, 69)
-    CloseButton.Text = "X"
+    CloseButton.Text = "Close"  -- Changed from 'X' to 'Close'
     CloseButton.Font = Enum.Font.GothamBold
     CloseButton.TextSize = 16
     CloseButton.TextColor3 = Color3.new(1, 1, 1)
     CloseButton.BorderSizePixel = 0
+    CloseButton.Visible = false  -- Start hidden
     
     local CloseButtonCorner = Instance.new("UICorner")
-    CloseButtonCorner.CornerRadius = UDim.new(0, 6)
+    CloseButtonCorner.CornerRadius = UDim.new(0, 8)  -- Slightly more rounded corners
     CloseButtonCorner.Parent = CloseButton
     
     -- Hover effect for close button
     CloseButton.MouseEnter:Connect(function()
-        TweenService:Create(CloseButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(200, 35, 51)}):Play()
+        TweenService:Create(CloseButton, TweenInfo.new(0.2), {
+            BackgroundColor3 = Color3.fromRGB(200, 35, 51),
+            Size = UDim2.new(0.42, 0, 0, 38)  -- Slightly grow on hover
+        }):Play()
     end)
     
     CloseButton.MouseLeave:Connect(function()
-        TweenService:Create(CloseButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(220, 53, 69)}):Play()
+        TweenService:Create(CloseButton, TweenInfo.new(0.2), {
+            BackgroundColor3 = Color3.fromRGB(220, 53, 69),
+            Size = UDim2.new(0.4, 0, 0, 36)  -- Return to normal size
+        }):Play()
     end)
     
     -- Parent close button after all other elements are created
     CloseButton.Parent = Container
+    
+    -- Function to show the close button with animation
+    local function showCloseButton()
+        CloseButton.Visible = true
+        CloseButton.Position = UDim2.new(0.5, 0, 0, 360)  -- Start slightly below
+        CloseButton.BackgroundTransparency = 1
+        CloseButton.TextTransparency = 1
+        
+        local fadeIn = TweenService:Create(CloseButton, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Position = UDim2.new(0.5, 0, 0, 340),
+            BackgroundTransparency = 0,
+            TextTransparency = 0
+        })
+        fadeIn:Play()
+    end
 
     -- Fade in animation
     Logo.TextTransparency = 1
@@ -211,8 +235,9 @@ return function()
     CopyButton.BackgroundTransparency = 1
     CopyButton.TextTransparency = 1
     StatusLabel.TextTransparency = 1
-    CloseButton.BackgroundTransparency = 1
-    CloseButton.TextTransparency = 1
+    ProgressBarBg.BackgroundTransparency = 1
+    ProgressBar.BackgroundTransparency = 1
+    CloseButton.Visible = false  -- Ensure close button is hidden initially
 
     local fadeInLogo = TweenService:Create(Logo, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0})
     local fadeInSubtitle = TweenService:Create(Subtitle, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0})
@@ -220,7 +245,8 @@ return function()
     local fadeInLink = TweenService:Create(DiscordLink, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0})
     local fadeInButton = TweenService:Create(CopyButton, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.2, TextTransparency = 0})
     local fadeInStatus = TweenService:Create(StatusLabel, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0})
-    local fadeInCloseButton = TweenService:Create(CloseButton, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0, TextTransparency = 0})
+    local fadeInProgressBarBg = TweenService:Create(ProgressBarBg, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.3})
+    local fadeInProgressBar = TweenService:Create(ProgressBar, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0})
 
     fadeInLogo:Play()
     wait(0.3)
@@ -233,31 +259,35 @@ return function()
     fadeInButton:Play()
     wait(0.3)
     fadeInStatus:Play()
-    fadeInCloseButton:Play()
+    fadeInProgressBarBg:Play()
+    fadeInProgressBar:Play()
     
-    -- Close button functionality
-    CloseButton.MouseButton1Click:Connect(function()
-        -- Fade out all elements
-        local fadeOut = TweenService:Create(Background, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
-        fadeOut:Play()
-        fadeOut.Completed:Wait()
+    -- Function to show completion and close button
+    local function showCompletion()
+        -- Update status to show completion
+        StatusLabel.Text = "Ready! Click Close to continue"
         
-        -- Destroy the loader
-        if LoaderGui then
-            LoaderGui:Destroy()
-        end
-        if BlurEffect then
-            BlurEffect:Destroy()
-        end
-    end)
+        -- Show close button with animation
+        task.wait(0.5)  -- Small delay before showing close button
+        showCloseButton()
+    end
 
-    -- Return the loader components for external control
+    -- Return functions to update the loader
     return {
-        Gui = LoaderGui,
         StatusLabel = StatusLabel,
         ProgressBar = ProgressBar,
+        ShowCompletion = showCompletion,  -- Export the completion function
         Destroy = function()
-            LoaderGui:Destroy()
+            local fadeOut = TweenService:Create(Background, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
+            fadeOut:Play()
+            fadeOut.Completed:Wait()
+            
+            if LoaderGui then
+                LoaderGui:Destroy()
+            end
+            if BlurEffect then
+                BlurEffect:Destroy()
+            end
             BlurEffect:Destroy()
         end
     }
