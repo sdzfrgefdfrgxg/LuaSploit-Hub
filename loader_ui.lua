@@ -198,31 +198,30 @@ return function()
     CloseButton.MouseEnter:Connect(function()
         TweenService:Create(CloseButton, TweenInfo.new(0.2), {
             BackgroundColor3 = Color3.fromRGB(200, 35, 51),
-            Size = UDim2.new(0.42, 0, 0, 38)  -- Slightly grow on hover
+            Size = UDim2.new(0.42, 0, 0, 38)  
         }):Play()
     end)
     
     CloseButton.MouseLeave:Connect(function()
         TweenService:Create(CloseButton, TweenInfo.new(0.2), {
             BackgroundColor3 = Color3.fromRGB(220, 53, 69),
-            Size = UDim2.new(0.4, 0, 0, 36)  -- Return to normal size
+            Size = UDim2.new(0.4, 0, 0, 36)  
         }):Play()
     end)
     
     -- Parent close button after all other elements are created
     CloseButton.Parent = Container
     
-    -- Function to show the close button with animation after 10 seconds
-    local function showCloseButton()
-        -- Wait for 10 seconds total before showing the close button
-        local startTime = os.clock()
-        while os.clock() - startTime < 10 do
-            task.wait()
-        end
+    -- Close button functionality
+    CloseButton.MouseButton1Click:Connect(function()
+        -- Fade out all elements
+        local fadeOut = TweenService:Create(Background, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
+        fadeOut:Play()
+        fadeOut.Completed:Wait()
         
         -- Now show and animate the close button
         CloseButton.Visible = true
-        CloseButton.Position = UDim2.new(0.5, 0, 0, 360)  -- Start slightly below
+        CloseButton.Position = UDim2.new(0.5, 0, 0, 360)  
         CloseButton.BackgroundTransparency = 1
         CloseButton.TextTransparency = 1
         
@@ -232,7 +231,7 @@ return function()
             TextTransparency = 0
         })
         fadeIn:Play()
-    end
+    end)
 
     -- Fade in animation
     Logo.TextTransparency = 1
