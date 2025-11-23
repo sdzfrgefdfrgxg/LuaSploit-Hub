@@ -176,6 +176,33 @@ return function()
     }
     ProgressGradient.Parent = ProgressBar
 
+    -- Close Button
+    local CloseButton = Instance.new("TextButton")
+    CloseButton.Size = UDim2.new(0, 30, 0, 30)
+    CloseButton.Position = UDim2.new(1, -40, 0, 10)
+    CloseButton.BackgroundColor3 = Color3.fromRGB(220, 53, 69)
+    CloseButton.Text = "X"
+    CloseButton.Font = Enum.Font.GothamBold
+    CloseButton.TextSize = 16
+    CloseButton.TextColor3 = Color3.new(1, 1, 1)
+    CloseButton.BorderSizePixel = 0
+    
+    local CloseButtonCorner = Instance.new("UICorner")
+    CloseButtonCorner.CornerRadius = UDim.new(0, 6)
+    CloseButtonCorner.Parent = CloseButton
+    
+    -- Hover effect for close button
+    CloseButton.MouseEnter:Connect(function()
+        TweenService:Create(CloseButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(200, 35, 51)}):Play()
+    end)
+    
+    CloseButton.MouseLeave:Connect(function()
+        TweenService:Create(CloseButton, TweenInfo.new(0.2), {BackgroundColor3 = Color3.fromRGB(220, 53, 69)}):Play()
+    end)
+    
+    -- Parent close button after all other elements are created
+    CloseButton.Parent = Container
+
     -- Fade in animation
     Logo.TextTransparency = 1
     Subtitle.TextTransparency = 1
@@ -184,6 +211,8 @@ return function()
     CopyButton.BackgroundTransparency = 1
     CopyButton.TextTransparency = 1
     StatusLabel.TextTransparency = 1
+    CloseButton.BackgroundTransparency = 1
+    CloseButton.TextTransparency = 1
 
     local fadeInLogo = TweenService:Create(Logo, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0})
     local fadeInSubtitle = TweenService:Create(Subtitle, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0})
@@ -191,6 +220,7 @@ return function()
     local fadeInLink = TweenService:Create(DiscordLink, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0})
     local fadeInButton = TweenService:Create(CopyButton, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0.2, TextTransparency = 0})
     local fadeInStatus = TweenService:Create(StatusLabel, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {TextTransparency = 0})
+    local fadeInCloseButton = TweenService:Create(CloseButton, TweenInfo.new(0.8, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 0, TextTransparency = 0})
 
     fadeInLogo:Play()
     wait(0.3)
@@ -203,6 +233,23 @@ return function()
     fadeInButton:Play()
     wait(0.3)
     fadeInStatus:Play()
+    fadeInCloseButton:Play()
+    
+    -- Close button functionality
+    CloseButton.MouseButton1Click:Connect(function()
+        -- Fade out all elements
+        local fadeOut = TweenService:Create(Background, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
+        fadeOut:Play()
+        fadeOut.Completed:Wait()
+        
+        -- Destroy the loader
+        if LoaderGui then
+            LoaderGui:Destroy()
+        end
+        if BlurEffect then
+            BlurEffect:Destroy()
+        end
+    end)
 
     -- Return the loader components for external control
     return {
