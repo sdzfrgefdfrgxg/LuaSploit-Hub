@@ -213,25 +213,34 @@ return function()
     CloseButton.Parent = Container
     
     -- Close button functionality
-    CloseButton.MouseButton1Click:Connect(function()
+    local function closeUI()
         -- Fade out all elements
-        local fadeOut = TweenService:Create(Background, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {BackgroundTransparency = 1})
+        local fadeOut = TweenService:Create(Background, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            BackgroundTransparency = 1
+        })
+        
+        -- Fade out all children
+        for _, child in ipairs(Container:GetDescendants()) do
+            if child:IsA("GuiObject") then
+                TweenService:Create(child, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+                    BackgroundTransparency = 1,
+                    TextTransparency = 1,
+                    ImageTransparency = 1
+                }):Play()
+            end
+        end
+        
         fadeOut:Play()
         fadeOut.Completed:Wait()
         
-        -- Now show and animate the close button
-        CloseButton.Visible = true
-        CloseButton.Position = UDim2.new(0.5, 0, 0, 360)  
-        CloseButton.BackgroundTransparency = 1
-        CloseButton.TextTransparency = 1
-        
-        local fadeIn = TweenService:Create(CloseButton, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
-            Position = UDim2.new(0.5, 0, 0, 340),
-            BackgroundTransparency = 0,
-            TextTransparency = 0
-        })
-        fadeIn:Play()
-    end)
+        -- Clean up
+        if BlurEffect then
+            BlurEffect:Destroy()
+        end
+        LoaderGui:Destroy()
+    end
+    
+    CloseButton.MouseButton1Click:Connect(closeUI)
 
     -- Fade in animation
     Logo.TextTransparency = 1
@@ -267,6 +276,21 @@ return function()
     fadeInStatus:Play()
     fadeInProgressBarBg:Play()
     fadeInProgressBar:Play()
+    
+    -- Function to show close button with animation
+    local function showCloseButton()
+        CloseButton.Visible = true
+        CloseButton.Position = UDim2.new(0.5, 0, 0, 360)
+        CloseButton.BackgroundTransparency = 1
+        CloseButton.TextTransparency = 1
+        
+        local fadeIn = TweenService:Create(CloseButton, TweenInfo.new(0.5, Enum.EasingStyle.Quad, Enum.EasingDirection.Out), {
+            Position = UDim2.new(0.5, 0, 0, 340),
+            BackgroundTransparency = 0,
+            TextTransparency = 0
+        })
+        fadeIn:Play()
+    end
     
     -- Function to show completion and close button
     local function showCompletion()
