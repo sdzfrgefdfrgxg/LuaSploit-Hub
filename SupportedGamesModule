@@ -33,13 +33,758 @@ function GamesModule.LoadGame(placeId, Window)
         })
         return true
         
-    -- Add more games here following the same pattern...
-    -- Each game should return true if loaded successfully
-    
-    else
-        -- Game not supported
-        return false
+    -- +1 Slayer Blade
+    elseif placeId == 15744137588 or placeId == 17556050821 then
+        GamesTab = Window:CreateTab("+1 Slayer Blade", 7733799795)
+        local Section = GamesTab:CreateSection("+1 Slayer Blade Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Cute Hub",
+            Description = "Only One Working Script For This Game, With Key System",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/quteeeee/etuchub/refs/heads/main/Cute%20Hub"))()
+            end
+        })
+        return true
+        
+    -- +1 Speed Maze
+    elseif placeId == 88489656058919 or placeId == 93298934267313 or placeId == 119960383256642 then
+        GamesTab = Window:CreateTab("+1 Speed Maze", 7733799795)
+        local Section = GamesTab:CreateSection("+1 Speed Maze Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Tora Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/SpeedMaze"))()
+            end
+        })
+        return true
+        
+    -- 100 Players Musical Chairs
+    elseif placeId == 135619589726492 or placeId == 100831518850725 or placeId == 118028313351438 or placeId == 127653011210604 or placeId == 134036116457963 then
+        GamesTab = Window:CreateTab("100 Players Musical Chairs", 7733799795)
+        local Section = GamesTab:CreateSection("100 Players Musical Chairs Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "100 Players Musical Chairs GUI",
+            Callback = function()
+                loadstring(game:HttpGet("https://rawscripts.net/raw/100-Players-Musical-Chairs-GUI-34564"))()
+            end
+        })
+        return true
+        
+    -- 2 Player Steal Brainrot
+    elseif placeId == 128066522055979 then
+        GamesTab = Window:CreateTab("2 Player Steal Brainrot", 7733799795)
+        local Section = GamesTab:CreateSection("2 Player Steal Brainrot Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Tora Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/2PlayerStealBrainrot"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Silent Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastefy.app/D6QeJh1w/raw"))()
+            end
+        })
+        return true
+        
+    -- 2 Player Battle Tycoon
+    elseif placeId == 116682722075937 then
+        GamesTab = Window:CreateTab("2 Player Battle Tycoon", 7733799795)
+        local Section = GamesTab:CreateSection("2 Player Battle Tycoon Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Infinite Yield",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()
+            end
+        })
+        return true
+        
+    -- 3008
+    elseif placeId == 2768379856 or placeId == 3824662112 or placeId == 11614543894 or placeId == 12146548680 or placeId == 12146555326 or placeId == 12146559508 or placeId == 12146562770 or placeId == 12146572337 or placeId == 12146577494 or placeId == 12146583406 or placeId == 13003089266 or placeId == 16988541929 or placeId == 16988606884 then
+        GamesTab = Window:CreateTab("3008", 7733799795)
+        local Section = GamesTab:CreateSection("3008 Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Zeerox Hub",
+            Description = "Best Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/RunDTM/ZeeroxHub/main/Loader.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Abyssal Hub",
+            Description = "Great Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Sealient/Sealients-Roblox-Scripts/refs/heads/main/3008-%20UPDATED/3008.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Rifk Hub",
+            Description = "Press G When You Run The Script (To Move UI)",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/ve3KXuJ8"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Sky Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/yofriendfromschool1/Sky-Hub/main/SkyHub.txt"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Neuron X",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Yumiara/CPP/refs/heads/main/Main.cpp"))()
+            end
+        })
+        return true
+        
+    -- 7 Days To Die
+    elseif placeId == 17474746614 or placeId == 77970919775750 or placeId == 121308443347459 or placeId == 135516941692071 then
+        GamesTab = Window:CreateTab("7 Days To Die", 7733799795)
+        local Section = GamesTab:CreateSection("7 Days To Die Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Tora Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/7DaysToLive"))()
+            end
+        })
+        return true
+        
+    -- 99 Nights in the Forest
+    elseif placeId == 79546208627805 or placeId == 126371807511901 or placeId == 126509999114328 then
+        GamesTab = Window:CreateTab("99 Nights in the Forest", 7733799795)
+        local Section = GamesTab:CreateSection("99 Nights in the Forest Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "VoidWare",
+            Description = "Best Keyless Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/VapeVoidware/VW-Add/main/nightsintheforest.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "H4xScripts",
+            Description = "Best Script With Key System",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/H4xScripts/Loader/refs/heads/main/loader.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "XVC Hub",
+            Description = "Great Script Without Key System",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/XVCHub/Games/main/99NightsintheForest"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Foxname Hub",
+            Description = "Very Good Keyless Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/caomod2077/Script/refs/heads/main/FoxnameHub.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "God Mode",
+            Description = "You Will Not Get Damage From Entities, If U Will Hungry etc.",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/ProBaconHub/DATABASE/refs/heads/main/99%20Nights%20in%20the%20Forest/Infinite%20Health.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Items Manager",
+            Description = "Script For Bring Any Items",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Bac0nHck/Scripts/refs/heads/main/bringitems.lua"))()
+            end
+        })
+        return true
+        
+    -- All Star Tower Defense X
+    elseif placeId == 17687504411 or placeId == 76036930502124 or placeId == 91328447844877 or placeId == 116323160733283 or placeId == 133908509748494 or placeId == 135438048113935 then
+        GamesTab = Window:CreateTab("All Star Tower Defense X", 7733799795)
+        local Section = GamesTab:CreateSection("All Star Tower Defense X Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Jimi Hub",
+            Description = "Best Script (50+ Features And Keyless)",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/bunnnwee/JimiHub/refs/heads/main/ASTDX-Normal"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Xenith Hub",
+            Description = "Very Good Script, But With Key System",
+            Callback = function()
+                loadstring(game:HttpGet("https://api.luarmor.net/files/v4/loaders/d7be76c234d46ce6770101fded39760c.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Akatsuki Hub",
+            Description = "Good Script With Easy Key System",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/AkatsukiHub1/STARX/refs/heads/main/README.md"))()
+            end
+        })
+        return true
+        
+    -- Adopt Me
+    elseif placeId == 920587237 or placeId == 16265016563 or placeId == 116093116638962 or placeId == 138865549483295 then
+        GamesTab = Window:CreateTab("Adopt Me", 7733799795)
+        local Section = GamesTab:CreateSection("Adopt Me Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Prodigy X",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/ReQiuYTPL/hub/main/ReQiuYTPLHub.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Aussie WIRE",
+            Callback = function()
+                loadstring(game:HttpGet("https://api.luarmor.net/files/v3/loaders/4f5c7bbe546251d81e9d3554b109008f.lua"))()
+            end
+        })
+        return true
+        
+    -- Arm Wrestle Simulator
+    elseif placeId == 13127800756 or placeId == 13918861725 or placeId == 15118146674 then
+        GamesTab = Window:CreateTab("Arm Wrestle Simulator", 7733799795)
+        local Section = GamesTab:CreateSection("Arm Wrestle Simulator Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Ducky Hub",
+            Description = "Best Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/bigbeanscripts/AWS-3/refs/heads/main/Ducky"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "XAZM Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/YogaProjectRblx/XAZM-Script-List/refs/heads/main/obf_C0zPSniHJ71T0ZGU2WWNqsQP0K2vq0f18VtZ8AX678c8y44952r42EpmCXbPJI2Y.lua.txt"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Great Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/rndmq/Serverlist/refs/heads/main/Loader"))()
+            end
+        })
+        return true
+        
+    -- Anime Eternal
+    elseif placeId == 90462358603255 then
+        GamesTab = Window:CreateTab("Anime Eternal", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Eternal Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Lin Hub",
+            Description = "Best Keyless Script For All Executors",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/LinuxDevBr/Anime-Eternal/refs/heads/main/Script.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "NS Hub",
+            Description = "Best Script With Key System",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OhhMyGehlee/sh/refs/heads/main/a"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Multi Hub",
+            Description = "Nice Keyless Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Allanursulino/Script.lua/refs/heads/main/AnimeEternal.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "AI Hub",
+            Description = "Great Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/AIHub091/AI-Hub/refs/heads/main/Anime-Eternal/Script.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Project Madara",
+            Description = "Very Good Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/IsThisMe01/Project-Madara/refs/heads/main/loader.lua"))()
+            end
+        })
+        return true
+        
+    -- Anime Spirits
+    elseif placeId == 11756036029 or placeId == 15728325012 or placeId == 16041086429 or placeId == 13548023767 then
+        GamesTab = Window:CreateTab("Anime Spirits", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Spirits Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "NS Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/NGpd76L8"))()
+            end
+        })
+        return true
+        
+    -- Anime Saga
+    elseif placeId == 17850641257 or placeId == 17850769550 or placeId == 86919534080009 or placeId == 95635144889952 or placeId == 98825012483066 or placeId == 127162061109648 then
+        GamesTab = Window:CreateTab("Anime Saga", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Saga Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Auto Attack, Auto Skills etc.",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/gumanba/Scripts/main/AnimeSaga"))()
+            end
+        })
+        return true
+        
+    -- Anime Vanguards
+    elseif placeId == 16146832113 or placeId == 16277809958 or placeId == 18219125606 then
+        GamesTab = Window:CreateTab("Anime Vanguards", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Vanguards Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "NukeVsCity Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/NukeVsCity/Scripts2024/refs/heads/main/AnimeVanguards"))()
+            end
+        })
+        return true
+        
+    -- Anime Dimensions Simulator
+    elseif placeId == 6938803436 or placeId == 6990129309 or placeId == 6990131029 or placeId == 6990133340 or placeId == 7274690025 or placeId == 7338881230 then
+        GamesTab = Window:CreateTab("Anime Dimensions Simulator", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Dimensions Simulator Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "SLH Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Yanwanlnwza/SmellLikeHacker/main/Animedimensions.lua"))()
+            end
+        })
+        return true
+        
+    -- Anime Slashing Simulator
+    elseif placeId == 12942665562 or placeId == 127378160773327 then
+        GamesTab = Window:CreateTab("Anime Slashing Simulator", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Slashing Simulator Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Inf All",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/Kd9p9Gxz"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Nami Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/ByNami/dkhub/main/Script"))()
+            end
+        })
+        return true
+        
+    -- Anime Simulator
+    elseif placeId == 17316900493 or placeId == 106601058626235 or placeId == 131692389956697 or placeId == 136007715714133 then
+        GamesTab = Window:CreateTab("Anime Simulator", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Simulator Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Lyzer Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://you.whimper.xyz/lyzer"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "NS Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/nKYVKQGg"))()
+            end
+        })
+        return true
+        
+    -- Anime Dungeon Fighters
+    elseif placeId == 12135640403 or placeId == 15502802094 or placeId == 15502802192 or placeId == 15742087191 or placeId == 16530578419 or placeId == 90641882317654 then
+        GamesTab = Window:CreateTab("Anime Dungeon Fighters", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Dungeon Fighters Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Nami Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/ByNami/dkhub/main/Script"))()
+            end
+        })
+        return true
+        
+    -- Anime Card Battles
+    elseif placeId == 18138547215 then
+        GamesTab = Window:CreateTab("Anime Card Battles", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Card Battles Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Ali Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/AliCode14/scripts/main/AnimeCardBattle.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Rinns Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/R1nn1/MainMenu1/main/MainMenuV1.2"))()
+            end
+        })
+        return true
+        
+    -- Anime Card Clash
+    elseif placeId == 110829983956014 then
+        GamesTab = Window:CreateTab("Anime Card Clash", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Card Clash Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Auto Farm, Auto Boss etc.",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/A0RWZsiY"))()
+            end
+        })
+        return true
+        
+    -- Anime Rangers X
+    elseif placeId == 72829404259339 or placeId == 80100836118427 then
+        GamesTab = Window:CreateTab("Anime Rangers X", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Rangers X Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "L-Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/YOies/KazounVN/refs/heads/main/ARX"))()
+            end
+        })
+        return true
+        
+    -- Anime Shadow 2
+    elseif placeId == 136755111277466 then
+        GamesTab = Window:CreateTab("Anime Shadow 2", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Shadow 2 Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Beecon Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/BaconBossScript/BeeconHub/main/BeeconHub"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Aeonic Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/mazino45/main/refs/heads/main/MainScript.lua"))()
+            end
+        })
+        return true
+        
+    -- Anime Power
+    elseif placeId == 76598287484083 then
+        GamesTab = Window:CreateTab("Anime Power", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Power Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Auto Farm & Auto Attack",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Jonthedruger/gg/refs/heads/main/animepower.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Auto Click, Auto Collect Drops, Auto Use Abillity",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/ZhangJunZ84/twvz/refs/heads/main/animepower.lua"))()
+            end
+        })
+        return true
+        
+    -- Anime Training RNG
+    elseif placeId == 137461040918786 then
+        GamesTab = Window:CreateTab("Anime Training RNG", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Training RNG Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Nut Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/01iq/me/refs/heads/main/AnimeTrainingRng.txt"))()
+            end
+        })
+        return true
+        
+    -- Anime Arise Evolution
+    elseif placeId == 133322550157181 or placeId == 139805797517889 then
+        GamesTab = Window:CreateTab("Anime Arise Evolution", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Arise Evolution Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Auto Clicker",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/TheMugenKingVIP/Anime-Arise-Evolution/refs/heads/main/obfuscator"))()
+            end
+        })
+        return true
+        
+    -- Anime Kingdom Simulator
+    elseif placeId == 17334984034 then
+        GamesTab = Window:CreateTab("Anime Kingdom Simulator", 7733799795)
+        local Section = GamesTab:CreateSection("Anime Kingdom Simulator Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "ApelHub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/ApelsinkaFr/ApelHub/refs/heads/main/ApelHub"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "NS Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/OhhMyGehlee/pil/refs/heads/main/ty"))()
+            end
+        })
+        return true
+        
+    -- Ant War
+    elseif placeId == 11157166793 or placeId == 11816888087 then
+        GamesTab = Window:CreateTab("Ant War", 7733799795)
+        local Section = GamesTab:CreateSection("Ant War Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Ywxo Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/ywxoofc/specifier/refs/heads/main/3989869156.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Kill Aura",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/rLYWBte1"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Spectrum Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://rawscripts.net/raw/Ant-War-HONEYPOT-ANT-and-LOOTING-Spectrum-For-Game-15562"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Wisl'i Universal Project",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/wisl884/wisl-i-Universal-Project1/main/Wisl'i%20Universal%20Project.lua"))()
+            end
+        })
+        return true
+        
+    -- Answer Or Die
+    elseif placeId == 11966456877 then
+        GamesTab = Window:CreateTab("Answer Or Die", 7733799795)
+        local Section = GamesTab:CreateSection("Answer Or Die Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Auto Answer, etc.",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/rndmq/Serverlist/refs/heads/main/Loader"))()
+            end
+        })
+        return true
+        
+    -- Airport Tycoon
+    elseif placeId == 3440262694 or placeId == 4946798350 or placeId == 5924752777 then
+        GamesTab = Window:CreateTab("Airport Tycoon", 7733799795)
+        local Section = GamesTab:CreateSection("Airport Tycoon Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Redeem All Codes",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/XVjj3RAU"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Good Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/JBRTv6Mp"))()
+            end
+        })
+        return true
+        
+    -- Asylum Life
+    elseif placeId == 132352755769957 or placeId == 111367088199015 or placeId == 105197025964151 then
+        GamesTab = Window:CreateTab("Asylum Life", 7733799795)
+        local Section = GamesTab:CreateSection("Asylum Life Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Flex Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/johnkate9700-create/asylum-life/refs/heads/main/flex"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Rip Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/CasperFlyModz/discord.gg-rips/main/Loader.lua"))()
+            end
+        })
+        return true
+        
+    -- A Wolf Or Other
+    elseif placeId == 2432005634 or placeId == 4712491674 then
+        GamesTab = Window:CreateTab("A Wolf Or Other", 7733799795)
+        local Section = GamesTab:CreateSection("A Wolf Or Other Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Nexus Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/GwnStefano/NexusHub/main/Main"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "A Wolf Or Other GUI",
+            Description = "Idk Why, But Script Will Be Executing Only In Menu",
+            Callback = function()
+                loadstring(game:HttpGet("https://paste.ee/r/NuSeu"))()
+            end
+        })
+        return true
+        
+    -- AIMBLOX
+    elseif placeId == 6808416928 or placeId == 6808484692 or placeId == 6808489605 or placeId == 7398449063 or placeId == 7807345659 or placeId == 8255927517 or placeId == 9441238005 or placeId == 9441239241 or placeId == 9663592067 or placeId == 9735290020 or placeId == 12402507490 or placeId == 12402515726 or placeId == 12402524402 or placeId == 17856909502 or placeId == 101435587895051 or placeId == 104385173851640 or placeId == 107420330508535 or placeId == 116665758943673 or placeId == 117986169470212 then
+        GamesTab = Window:CreateTab("AIMBLOX", 7733799795)
+        local Section = GamesTab:CreateSection("AIMBLOX Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Big Hitbox",
+            Callback = function()
+                loadstring(game:HttpGet("https://pastebin.com/raw/feebYa1r"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "ESP",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Lucasfin000/SpaceHub/main/UESP"))()
+            end
+        })
+        return true
+        
+    -- Azure Latch
+    elseif placeId == 94647229517154 then
+        GamesTab = Window:CreateTab("Azure Latch", 7733799795)
+        local Section = GamesTab:CreateSection("Azure Latch Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Script",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/mokaEZF/Ez/refs/heads/main/aura"))()
+            end
+        })
+        return true
+        
+    -- Animal Attack
+    elseif placeId == 9220209012 then
+        GamesTab = Window:CreateTab("Animal Attack", 7733799795)
+        local Section = GamesTab:CreateSection("Animal Attack Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Bacon Hacks",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/Bac0nHck/Scripts/main/AnimalAttack"))()
+            end
+        })
+        return true
+        
+    -- Arsenal
+    elseif placeId == 286090429 or placeId == 385792440 or placeId == 391595633 or placeId == 4646345676 then
+        GamesTab = Window:CreateTab("Arsenal", 7733799795)
+        local Section = GamesTab:CreateSection("Arsenal Script/s")
+        
+        -- Add Arsenal scripts here if needed
+        
+        return true
+        
+    -- Natural Disasters
+    elseif placeId == 189707 or placeId == 3696971654 or placeId == 9673632096 then
+        GamesTab = Window:CreateTab("Natural Disasters", 7733799795)
+        local Section = GamesTab:CreateSection("Natural Disasters Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Null Fire / Solara & mobile support",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/InfernusScripts/Null-Fire/main/Loader"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "NDS Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/KaterHub-Inc/NaturalDisasterSurvival/refs/heads/main/main.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "CH Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/RobloxHackingProject/CHHub/main/CHHub.lua"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Sp4m.wtf Hub",
+            Callback = function()
+                loadstring(game:HttpGet("https://apiravex.vercel.app/loader"))()
+            end
+        })
+        
+        GamesTab:CreateButton({
+            Name = "Plutonium",
+            Callback = function()
+                loadstring(game:HttpGet("https://raw.githubusercontent.com/PawsThePaw/Plutonium.AA/main/Plutonium.Loader.lua", true))()
+            end
+        })
+        return true
     end
+    
+    -- Game not supported
+    return false
 end
 
 -- Function to check if game is supported
@@ -47,7 +792,132 @@ function GamesModule.IsGameSupported(placeId)
     local supportedGames = {
         [621129760] = "KAT",
         [738339342] = "Flood Escape 2",
-        -- Add all your supported PlaceIds here
+        [15744137588] = "+1 Slayer Blade",
+        [17556050821] = "+1 Slayer Blade",
+        [88489656058919] = "+1 Speed Maze",
+        [93298934267313] = "+1 Speed Maze",
+        [119960383256642] = "+1 Speed Maze",
+        [135619589726492] = "100 Players Musical Chairs",
+        [100831518850725] = "100 Players Musical Chairs",
+        [118028313351438] = "100 Players Musical Chairs",
+        [127653011210604] = "100 Players Musical Chairs",
+        [134036116457963] = "100 Players Musical Chairs",
+        [128066522055979] = "2 Player Steal Brainrot",
+        [116682722075937] = "2 Player Battle Tycoon",
+        [2768379856] = "3008",
+        [3824662112] = "3008",
+        [11614543894] = "3008",
+        [12146548680] = "3008",
+        [12146555326] = "3008",
+        [12146559508] = "3008",
+        [12146562770] = "3008",
+        [12146572337] = "3008",
+        [12146577494] = "3008",
+        [12146583406] = "3008",
+        [13003089266] = "3008",
+        [16988541929] = "3008",
+        [16988606884] = "3008",
+        [17474746614] = "7 Days To Die",
+        [77970919775750] = "7 Days To Die",
+        [121308443347459] = "7 Days To Die",
+        [135516941692071] = "7 Days To Die",
+        [79546208627805] = "99 Nights in the Forest",
+        [126371807511901] = "99 Nights in the Forest",
+        [126509999114328] = "99 Nights in the Forest",
+        [17687504411] = "All Star Tower Defense X",
+        [76036930502124] = "All Star Tower Defense X",
+        [91328447844877] = "All Star Tower Defense X",
+        [116323160733283] = "All Star Tower Defense X",
+        [133908509748494] = "All Star Tower Defense X",
+        [135438048113935] = "All Star Tower Defense X",
+        [920587237] = "Adopt Me",
+        [16265016563] = "Adopt Me",
+        [116093116638962] = "Adopt Me",
+        [138865549483295] = "Adopt Me",
+        [13127800756] = "Arm Wrestle Simulator",
+        [13918861725] = "Arm Wrestle Simulator",
+        [15118146674] = "Arm Wrestle Simulator",
+        [90462358603255] = "Anime Eternal",
+        [11756036029] = "Anime Spirits",
+        [15728325012] = "Anime Spirits",
+        [16041086429] = "Anime Spirits",
+        [13548023767] = "Anime Spirits",
+        [17850641257] = "Anime Saga",
+        [17850769550] = "Anime Saga",
+        [86919534080009] = "Anime Saga",
+        [95635144889952] = "Anime Saga",
+        [98825012483066] = "Anime Saga",
+        [127162061109648] = "Anime Saga",
+        [16146832113] = "Anime Vanguards",
+        [16277809958] = "Anime Vanguards",
+        [18219125606] = "Anime Vanguards",
+        [6938803436] = "Anime Dimensions Simulator",
+        [6990129309] = "Anime Dimensions Simulator",
+        [6990131029] = "Anime Dimensions Simulator",
+        [6990133340] = "Anime Dimensions Simulator",
+        [7274690025] = "Anime Dimensions Simulator",
+        [7338881230] = "Anime Dimensions Simulator",
+        [12942665562] = "Anime Slashing Simulator",
+        [127378160773327] = "Anime Slashing Simulator",
+        [17316900493] = "Anime Simulator",
+        [106601058626235] = "Anime Simulator",
+        [131692389956697] = "Anime Simulator",
+        [136007715714133] = "Anime Simulator",
+        [12135640403] = "Anime Dungeon Fighters",
+        [15502802094] = "Anime Dungeon Fighters",
+        [15502802192] = "Anime Dungeon Fighters",
+        [15742087191] = "Anime Dungeon Fighters",
+        [16530578419] = "Anime Dungeon Fighters",
+        [90641882317654] = "Anime Dungeon Fighters",
+        [18138547215] = "Anime Card Battles",
+        [110829983956014] = "Anime Card Clash",
+        [72829404259339] = "Anime Rangers X",
+        [80100836118427] = "Anime Rangers X",
+        [136755111277466] = "Anime Shadow 2",
+        [76598287484083] = "Anime Power",
+        [137461040918786] = "Anime Training RNG",
+        [133322550157181] = "Anime Arise Evolution",
+        [139805797517889] = "Anime Arise Evolution",
+        [17334984034] = "Anime Kingdom Simulator",
+        [11157166793] = "Ant War",
+        [11816888087] = "Ant War",
+        [11966456877] = "Answer Or Die",
+        [3440262694] = "Airport Tycoon",
+        [4946798350] = "Airport Tycoon",
+        [5924752777] = "Airport Tycoon",
+        [132352755769957] = "Asylum Life",
+        [111367088199015] = "Asylum Life",
+        [105197025964151] = "Asylum Life",
+        [2432005634] = "A Wolf Or Other",
+        [4712491674] = "A Wolf Or Other",
+        [6808416928] = "AIMBLOX",
+        [6808484692] = "AIMBLOX",
+        [6808489605] = "AIMBLOX",
+        [7398449063] = "AIMBLOX",
+        [7807345659] = "AIMBLOX",
+        [8255927517] = "AIMBLOX",
+        [9441238005] = "AIMBLOX",
+        [9441239241] = "AIMBLOX",
+        [9663592067] = "AIMBLOX",
+        [9735290020] = "AIMBLOX",
+        [12402507490] = "AIMBLOX",
+        [12402515726] = "AIMBLOX",
+        [12402524402] = "AIMBLOX",
+        [17856909502] = "AIMBLOX",
+        [101435587895051] = "AIMBLOX",
+        [104385173851640] = "AIMBLOX",
+        [107420330508535] = "AIMBLOX",
+        [116665758943673] = "AIMBLOX",
+        [117986169470212] = "AIMBLOX",
+        [94647229517154] = "Azure Latch",
+        [9220209012] = "Animal Attack",
+        [286090429] = "Arsenal",
+        [385792440] = "Arsenal",
+        [391595633] = "Arsenal",
+        [4646345676] = "Arsenal",
+        [189707] = "Natural Disasters",
+        [3696971654] = "Natural Disasters",
+        [9673632096] = "Natural Disasters"
     }
     
     return supportedGames[placeId] ~= nil
