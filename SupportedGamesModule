@@ -1,0 +1,56 @@
+-- LuaSploit Hub - Games Module
+-- This file contains all game-specific tabs and scripts
+-- To be loaded by the main hub script
+
+local GamesModule = {}
+
+function GamesModule.LoadGame(placeId, Window)
+    local GamesTab
+    
+    -- KAT (Knife Ability Test)
+    if placeId == 621129760 then
+        GamesTab = Window:CreateTab("KAT", 7733799795)
+        local Section = GamesTab:CreateSection("KAT Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Kings Hub - Key in my discord",
+            Callback = function()
+                pcall(loadstring(game:HttpGet('https://raw.githubusercontent.com/zReal-King/Knife-Ability-Test/main/Gui')))
+            end
+        })
+        return true
+        
+    -- Flood Escape 2
+    elseif placeId == 738339342 then
+        GamesTab = Window:CreateTab("Flood Escape 2", 7733799795)
+        local Section = GamesTab:CreateSection("Flood Escape 2 Script/s")
+        
+        GamesTab:CreateButton({
+            Name = "Fe2 hub - by LuaSploit",
+            Callback = function()
+                loadstring(game:HttpGet("YOUR_FLOOD_ESCAPE_2_SCRIPT_URL"))()
+            end
+        })
+        return true
+        
+    -- Add more games here following the same pattern...
+    -- Each game should return true if loaded successfully
+    
+    else
+        -- Game not supported
+        return false
+    end
+end
+
+-- Function to check if game is supported
+function GamesModule.IsGameSupported(placeId)
+    local supportedGames = {
+        [621129760] = "KAT",
+        [738339342] = "Flood Escape 2",
+        -- Add all your supported PlaceIds here
+    }
+    
+    return supportedGames[placeId] ~= nil
+end
+
+return GamesModule
