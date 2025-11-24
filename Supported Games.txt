@@ -5,41 +5,113 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/EnesX
 local supportedGames = [[
 LuaSploit Hub - Supported Games
 
-1. Arsenal
-2. Bad Business
-3. Blade Ball
-4. BREAK IN AND STEAL THINGZ1!1!1
-5. Breaking Point
-6. Bubble Gum Simulator INFINITY
-7. Build A Boat
-8. Counter Blox
-9. Da Hood
-10. Dead Rails
-11. Die of Death
-12. Dress To Impress (DTI)
-13. Examination
-14. Fishc
-15. Flood Escape 2
-16. Forsaken
-17. Funky Friday
-18. Grow A Garden
-19. Kamehameha Simulator
-20. KAT X
-21. Murder Mystery 2
-22. Natural Disasters
-23. Phantom Forces
-24. Piggy
-25. Prison Life
-26. RIVALS
-27. Scary Spelling
-28. Spray Paint!
-29. Strongest Battlegrounds
-30. StudTowerDefense
+1. 100 Players Musical Chairs
+2. +1 Speed Maze (Tora Hub)
+3. 2 Player Steal Brainrot (Tora Hub)
+4. 3008 (Zeerox Hub)
+5. 7 Days To Live (Tora Hub)
+6. 99 Nights in the Forest (VoidWare)
+7. A Universal Time
+8. Ability Wars
+9. Adopt Me (Prodigy X)
+10. All Star Tower Defense X (Jimi Hub)
+11. Animal Simulator
+12. Anime Eternal (Lin Hub)
+13. Anime Saga (Auto Attack, Auto Skills etc.)
+14. Anime Shadow 2 (Beecon Hub)
+15. Anime Spirits (NS Hub)
+16. Anime Training RNG (Nut Hub)
+17. Ant War (Ywxo Hub)
+18. Aqua Racer
+19. Arise Crossover
+20. Arm Wrestle Simulator (Ducky Hub)
+21. Arsenal
+22. Attack on Titan Revolution
+23. Bad Business
+24. Blade Ball
+25. BREAK IN AND STEAL THINGZ1!1!1
+26. Breaking Point
+27. Bubble Gum Simulator INFINITY
+28. Build A Boat
+29. Counter Blox
+30. Da Hood
+31. Dead Planets
+32. Dead Rails
+33. Defusal FPS
+34. Desert Detectors
+35. Devas Of Creation
+36. DIG
+37. Dig It!
+38. Die of Death
+39. Drill Digging Simulator
+40. Dress To Impress (DTI)
+41. Duck Army!
+42. Eat The World
+43. Elemental Battlegrounds
+44. Emergency Hamburg
+45. Entry Point
+46. Epic Minigames
+47. Evade
+48. Examination
+49. Expedition Antarctica
+50. Find the Markers
+51. Fishc
+52. Flood Escape 2
+53. Forsaken
+54. Funky Friday
+55. Grow a Garden
+56. Grow Crystals!
+57. Kamehameha Simulator
+58. KAT (Knife Ability Test)
+59. Murder Mystery 2
+60. Natural Disasters
+61. PETS GO!
+62. Pet Simulator 99!
+63. Phantom Forces
+64. Piggy
+65. Pizzeria Tycoon 2
+66. Plants vs Brainrots
+67. Pressure Wash Simulator
+68. Prison Life
+69. Project Delta
+70. Prospecting!
+71. Protect The House From Monsters
+72. Pull A Sword
+73. Ragdoll Engine
+74. Reborn As Swordman
+75. RIVALS
+76. Ro-Ghoul
+77. RNG Odyssey
+78. Scary Spelling
+79. SCP Roleplay
+80. SharkBite 2
+81. Shrimp Game
+82. Sonic Speed Simulator
+83. Spelling Bee!
+84. Spray Paint!
+85. Steal A Brainrot
+86. Strucid
+87. Strongest Battlegrounds
+88. StudTowerDefense
+89. The Bronx 3
+90. The Rake REMASTERED
+91. The Ride
+92. The Survival Game
+93. Theme Park Tycoon 2
+94. Tower of Hell
+95. Tower of Jump
+96. Tower Battles: Battlefront
+97. TPS Street Soccer
+98. TPS Ultimate Soccer
+99. Trench War
+100. Triathlon Star Simulator
+101. TYPE://SOUL
+102. Typical Colors 2
 ]]
 
 -- Create and configure the games dialog
 local dialog = Library:CreateChangelogDialog({
-    Title = "LuaSploit Hub - Supported Games - 30",
+    Title = "LuaSploit Hub - Supported Games - 101",
     ChangelogText = supportedGames,
     Search = true,
     NotifyLibrary = "Rayfield", 
@@ -54,3 +126,4 @@ local dialog = Library:CreateChangelogDialog({
 })
 
 return dialog
+
