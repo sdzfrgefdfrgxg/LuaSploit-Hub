@@ -5,16 +5,24 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/EnesX
 local dialog = Library:CreateChangelogDialog({
     Title = "LuaSploit Hub - Changelogs",
     ChangelogText = [[
-    Version: 1.2.5
+    Version: 1.2.6
     
     Added Features:
     - Added Logos to the Tabs
+    - Made a Loader
+    - Added new UI
+    - Working on another UI
     - Added Script viewer
     - Made a Discord server
+    - Added 399 more supported games
+    - Updated Executor info
     
     Updated Games:
     - Updated support for Natural Disasters!
     - Added support for Prison Life!
+    - Added support for Die of Death!
+    - Added support for Steal A Brainrot!
+    - Added support for even more games!
     
     Notes:
     - Report any bug or not working scripts via feedback - under Settings tab. Or in our Discord
