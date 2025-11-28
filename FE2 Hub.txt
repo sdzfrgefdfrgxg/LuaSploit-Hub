@@ -1,5 +1,6 @@
 --Istg if someone steals this ass script atleast give me credit
 --By LuaSploit
+--Assitsed by AI
 local TweenService = game:GetService("TweenService")
 
 
@@ -263,3 +264,4 @@ end
 })
 
 --By LuaSploit
+
