@@ -11784,9 +11784,11 @@ function GamesModule.IsGameSupported(placeId)
         [140152544622650] = "Combat Warriors",
         [140456357795117] = "Rope Swing Obby",
         [140588718649817] = "Starving Pianists",
+        [155615604] = "Prison Life",
     }
 
     return supportedGames[placeId] ~= nil
 end
 
 return GamesModule
+
