@@ -5,9 +5,10 @@ local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/EnesX
 local dialog = Library:CreateChangelogDialog({
     Title = "LuaSploit Hub - Changelogs",
     ChangelogText = [[
-    Version: 1.2.6
+    Version: 1.2.7
     
     Added Features:
+    -- Small little fixes, fixed the Ui loader from not fitting and fixed supported button not working
     - Added Logos to the Tabs
     - Made a Loader
     - Added new UI
