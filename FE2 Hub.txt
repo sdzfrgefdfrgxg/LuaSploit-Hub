@@ -260,8 +260,6 @@ MinimizeButton.MouseButton1Click:Connect(function()
     end
 end)
 
-end
-})
-
 --By LuaSploit
+
 
